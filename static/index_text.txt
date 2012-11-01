@@ -1,0 +1,3 @@
+index text
+
+The ReCode Project is a community-driven effort to preserve computer art by translating it into a modern programming language. Every translated work is available to the public and contemporary artists to learn from, share, and build on. 

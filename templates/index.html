@@ -1,23 +1,76 @@
 {% extends "/layout.html" %}
 
-{% block styles %}{% endblock %}
+{% block styles %}
+<style>
+img  {
+    padding: 5px;
+}
+</style>
+{% endblock %}
 
-    
+{% block body %}    
 </head>
     <body>
-        <div class="page-header" align="center">
+        <div class="hero-unit" align="center">
             <a href="/" align="center">
                 <img src="static/img/recode_logo.png">
             </a>
-            <h1 align="center">THE RECODE PROJECT</h1>
+            <h2 align="center">THE RECODE PROJECT</h2>
+            <p>An active archive of computer art.</p>
         </div>  
+        <div class="row-fluid">
+            <div class="span4 offset1">
+                </br>
+                <p>
+                The ReCode Project is a community-driven effort to preserve computer art by translating it into a modern programming language.
+                </p>
+                <p> 
+                Every translated work is available to the public and contemporary artists to learn from, share, and build on. 
+                </p>
+                <p>
+                To participate, visit our <a href="https://github.com/matthewepler/ReCode_Project">GitHub repo</a>.
+                </p>
+            </div>
+            <div class="span6 offset1">
+                <h3>Launch Event: Hackathon</h3>
+                <p><strong>Saturday, November 17</strong></p>
+                <p><strong>10am - 7pm</strong></p>
+                <p><strong>721 Broadway, New York, NY 10003</strong></p>
+                <p><strong>IRC Freenode channel #recodeproject</strong></p>
+                <p>Sign-up for physical or virtual attendance at our <a href="http://recodeproject.eventbrite.com/">Eventbrite page</a></p>
+            </div>
+        </div>
+        <div class="row-fluid">
+            <div class="span4 offset1">
+                <h3>Current Projects</h3>
+                <p>
+                    "Computer Graphics and Art" was a quartley magazine published between 1976 and 1978. We are using PDF copies of the entire run of the magazine as our starting point for the project. On the 17th of November, coders from around the world will gather to translate these works. The majority of them have no code published alongside the original result. There will be opportunity for a variety of interpretations and approaches, all of which can become the starting point for a new work.
+                </p>
+                <p>
+                    PDFs came from <a href="http://rhizome.org/editorial/2012/sep/25/prosthetic-knowledge-picks-computer-graphics-art-1/">Rhizome</a> via <a href="http://dada.compart-bremen.de">compart</a>.
+                </p>
+            </div>
+            <div class="span6 offset1">
+                </br>
+                </br>
+                </br>
+                <img src="/static/img/thumbs/thumb3.png">
+                <img src="/static/img/thumbs/thumb2.png">
+                <img src="/static/img/thumbs/thumb1.png">
+                <img src="/static/img/thumbs/thumb4.png">
+                <img src="/static/img/thumbs/thumb6.png">
+                <img src="/static/img/thumbs/thumb5.png">
+                <img src="/static/img/thumbs/thumb7.png">
+                <img src="/static/img/thumbs/thumb8.png">
+                <img src="/static/img/thumbs/thumb9.png">
+            </div>
+        </div>
 
-            {% block body %}{% endblock %}
             
             <footer>
             </footer>
 
         </div>
-
+{% endblock %}
 
 {% block scripts %}{% endblock %}

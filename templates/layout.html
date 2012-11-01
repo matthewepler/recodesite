@@ -19,19 +19,10 @@
 
     </head>
     <body>
-        <div class="page-header" align="center">
-            <a href="/" align="center">
-                <img src="static/img/recode_logo.png">
-            </a>
-            <h1 align="center">THE RECODE PROJECT</h1>
-        </div>  
-
-            {% block body %}{% endblock %}
+        {% block body %}{% endblock %}
             
-            <footer>
-            </footer>
-
-        </div>
+        <footer>
+        </footer>
 
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script>
         <script>window.jQuery || document.write('<script src="{{ url_for('static', filename='js/jquery-1.8.1.min.js') }}"><\/script>')</script>
