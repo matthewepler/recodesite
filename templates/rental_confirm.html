@@ -1,0 +1,41 @@
+{% extends "/layout.html" %}
+
+{% block styles %}
+<style>
+img.confirm {
+	width: 300px;
+}
+</style>
+{% endblock %}
+
+{% block body %}
+
+<div class="row">
+
+	<!-- left column -->
+	<div class="span6 offset1">
+		<h2>Rental Confirmed</h2>
+		Name : {{ name }}<br>
+		Good luck on your journey to, {{ life_goal}}
+
+		<hr />
+		{% if return_time %}
+		Return time : {{ return_time.strftime("%m/%d/%Y %H:%M %p")}}
+
+		{% else %}
+		Keep for eternity.
+		
+		{% endif %}
+	</div>
+
+	<div colspan="4">
+		<img src="/static/img/animals/{{ animal.get('image') }}" alt="{{ animal_name }}"class="confirm img-polaroid">
+		
+	</div>
+
+</div>
+
+{% endblock %}
+
+
+{% block scripts %}{% endblock %}
