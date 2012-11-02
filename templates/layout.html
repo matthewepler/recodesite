@@ -19,9 +19,35 @@
 
     </head>
     <body>
+        <div class="navbar navbar-inverse navbar-fixed-top">
+            <div class="navbar-inner">
+                <div class="container">
+                    <a class="brand" href="/">
+                        <img src="/static/img/recode_logo_inv_icon.png" width="15" height="15">
+                    </a>
+                    <div class="pull-right">
+                        <a href="https://twitter.com/ReCodeProject" target="_blank">
+                            <img src="/static/img/twitter_dark.png" width="25" height="25" style="margin-top:7px">
+                        </a>
+                        <a href="https://github.com/matthewepler/ReCode_Project" target="_blank">
+                            <img src="/static/img/github_dark.png" width="20" height="20" style="margin-top:5px">
+                        </a>
+                        <a href="mailto:info@recodeproject.com" target="_blank">
+                            <img src="/static/img/mail_dark.png" style="margin-top:5px">
+                        </a>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+
         {% block body %}{% endblock %}
             
-        <footer>
+        <footer align="center">
+            </br>
+            <p>
+                All works created for the ReCode Project are covered under the Creative Commons <a href="http://creativecommons.org/licenses/by-sa/3.0/" traget="_blank">Attribution-ShareAlike 3.0</a> license. </a>
+            </p>
         </footer>
 
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script>
