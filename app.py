@@ -1,4 +1,4 @@
-import os, datetime
+import os, fnmatch
 
 from flask import Flask, request 
 from flask import render_template
@@ -11,6 +11,13 @@ app = Flask(__name__)
 @app.route("/")
 def index():
 	
+	filenames = []
+	# get file names recursively, add to list
+	for root, dirnames, filenames in os.walk('/static/img/cards/'):
+	  for filename in fnmatch.filter(filenames, '*.png'):
+	      filenames.append(os.path.join(root, filename))
+	      app.logger.debug(filename)
+
 	return render_template("index.html")
 
 

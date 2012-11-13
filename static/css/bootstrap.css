@@ -5238,10 +5238,11 @@ input[type="submit"].btn.btn-mini {
 
 .thumbnail {
   display: block;
-  padding: 4px;
+  padding: 15px;
   line-height: 20px;
-  border: 1px solid #ddd;
-  -webkit-border-radius: 4px;
+  text-align: center;
+/* border: 1px solid #ddd;*/
+/*  -webkit-border-radius: 4px;
      -moz-border-radius: 4px;
           border-radius: 4px;
   -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.055);
@@ -5250,7 +5251,7 @@ input[type="submit"].btn.btn-mini {
   -webkit-transition: all 0.2s ease-in-out;
      -moz-transition: all 0.2s ease-in-out;
        -o-transition: all 0.2s ease-in-out;
-          transition: all 0.2s ease-in-out;
+          transition: all 0.2s ease-in-out;*/
 }
 
 a.thumbnail:hover {
@@ -5265,11 +5266,12 @@ a.thumbnail:hover {
   max-width: 100%;
   margin-right: auto;
   margin-left: auto;
+  padding-bottom: 5px
 }
 
 .thumbnail .caption {
-  padding: 9px;
-  color: #555555;
+  /*padding: 9px;*/
+  color: #ffffff;
 }
 
 .label,
