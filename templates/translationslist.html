@@ -1,0 +1,12 @@
+{% extends "/layout.html" %}
+
+{% block styles %}
+{% endblock %}
+
+{% block body %}
+
+{% for a in artworks %}
+  <p> {{ a.title }} </p>
+{%  endfor %}
+
+{% endblock %}
