@@ -44,6 +44,8 @@ function getURLParameter(name) {
     return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search)||[,""])[1].replace(/\+/g, '%20'))||null;
 }
 
+Gh3.client_id = "a199482938d9ff482aba";
+Gh3.client_secret = "189a51834c73b9ae638c89352049fe615995c746";
 var user = new Gh3.User("matthewepler");
 var repo = new Gh3.Repository("ReCode_Project", user);
 repo.fetchBranches(function(err, res){
