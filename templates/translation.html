@@ -1,0 +1,32 @@
+{% extends "/layout.html" %}
+
+
+{% block body %}
+
+<div class="container">
+	<div class="span10 offset1" style="margin-top:100px">
+		{% for f in translation.files %}
+			{%  if f.main == "yes" %}
+				<h2>{{ f.title }}</h2>
+			{% endif %}
+		{% endfor %}
+		<h3>{{ translation.artist }}</h3>
+	</br>
+		<p>based on: <a href="/artwork/{{ original.slug }}">{{ original.title }}</a> by {{ original.artist }}, {{ original.date }}</p>
+		<div class="pull-right">
+			<a href={{ translation.repo_link }}>[repo]</a>
+		</div>
+		<hr style="margin:20px 0px 0px 0px">
+		</br>
+		<img src="{{ translation.photo_link }}">
+	</br>
+			{% for f in translation.file_links %}
+				<h4>{{ f }}</h4>
+			{% endfor %}
+
+				
+		</pre>
+	</div>
+</div>
+
+{% endblock %}

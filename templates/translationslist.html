@@ -5,8 +5,20 @@
 
 {% block body %}
 
-{% for a in artworks %}
-  <p> {{ a.title }} </p>
-{%  endfor %}
-
+<section id="thumbnails" style="margin-top:100px"> 
+        <div class="container-fluid offset1">
+			<ul class="thumbnails">  
+            {% for a in artworks %}       
+                    <li class="span4">
+                    <div class="thumbnail">
+                    <a href="/artwork/{{ a.slug }}"><img src={{ a.photo_link }}><p>{{ a.artist }}</p>
+                    </a>
+                    </div>
+                    </li>  
+            {% endfor %}  
+            </ul>
+        </div>
+</section>
+        </br>
+        </br>
 {% endblock %}

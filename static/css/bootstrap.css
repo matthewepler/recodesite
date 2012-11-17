@@ -773,7 +773,7 @@ dd {
 }
 
 hr {
-  margin: 20px 0;
+  margin: 20px 95px 0px 95px;
   border: 0;
   border-top: 1px solid #eeeeee;
   border-bottom: 1px solid #ffffff;
@@ -5210,7 +5210,7 @@ input[type="submit"].btn.btn-mini {
 }
 
 .thumbnails {
-  margin-left: -20px;
+  margin-left: -40px;
   list-style: none;
   *zoom: 1;
 }

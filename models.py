@@ -13,8 +13,10 @@ class Artwork( Document ):
 	language = StringField()
 	photo_link = StringField()
 	code_link = StringField()
+	api_link = StringField()
 	slug = StringField()
-
+	description = StringField()
+	hasTranslation = StringField()
 
 class Artist( EmbeddedDocument ):
 	name = StringField();
@@ -23,13 +25,25 @@ class Artist( EmbeddedDocument ):
 	links = ListField( StringField() )
 
 
-class Translation( EmbeddedDocument ):
+class Translation( Document ):
 	title = StringField()
 	artist = StringField()
-	artist_url = StringField()
-	language = StringField()
+	orig_artist = StringField()
+	orig_title = StringField()
 	photo_link = StringField()
-	code_link = StringField()
+	repo_link = StringField()
+	category = StringField()
+	slug = StringField()
+	artwork_slug = StringField()
+	files = ListField( StringField() )
+	file_links = ListField( StringField() )
+	raw_files = ListField( StringField() )
+
+class Volume( Document ):
+	title = StringField()
+	volume_detail = StringField()
+	download_link = StringField()
+
 
 
 # ------ FORMS ----------

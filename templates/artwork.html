@@ -1,0 +1,79 @@
+{% extends "/layout.html" %}
+
+{% block styles %}
+{% endblock %}
+
+{% block body %}
+
+<div class="row-fluid offset1">
+	<div class="span10" name="display" style="margin-top:150px">
+		<div class="span6" name="image">
+			<img src="{{ artwork.photo_link }}" width="400" height="400">
+		</div>
+		<div class="span4" name="data" style="margin-top:-20px">
+			<p><h2>{{ artwork.title }}</h2></p>
+			<p><h3>{{ artwork.artist }}</h3></p>
+			</br>
+			source: {{ artwork.source }}
+			</br>
+			source document: <a href={{ artwork.source_link }} target="_blank">{{ artwork.source_detail }}</a>
+			</br>
+			date:   {{ artwork.date }} 
+			</br>
+<!-- 			language: {{ artwork.language }}
+			</br> -->
+			</br>
+			description:
+			</br>
+			{{ artwork.description }}
+			</br>
+			</br>
+			<a href={{ artwork.code_link }} target="_blank"> GitHub repository </a>
+			
+		</div>
+	</div>
+</div>
+</br>
+<hr>
+
+
+<!-- 
+{% for t in translations %}
+<p>{{ t.category }}</p>
+{% endfor %} -->
+
+<div class = "row-fluid offset1">
+	<div class="span12">
+		<h3>Translations</h3>
+		<div class="span3" style="background:#F2F2F2;text-align:center">
+			<h5>Original Sources</h5>
+			{% for t in translations %}
+			{% if t.category == "original" %}
+				<p><a href="/translation/{{ t.slug }}">{{ t.artist }}</a></p>
+			{% endif %}
+			{% endfor %}
+		</div>
+		<div class="span3" style="background:#F2F2F2;text-align:center">
+			<h5>Direct Translation</h5>
+			{% for t in translations %}
+			{% if t.category == "translation" %}
+				<p><a href="/translation/{{ t.slug }}">{{ t.artist }}</a></p>
+			{% endif %}
+			{% endfor %}
+		</div>
+		<div class="span3" style="background:#F2F2F2;text-align:center">
+			<h5>Experimental</h5>
+			{% for t in translations %}
+			{% if t['category'] == 'experimental' %}
+				<p><a href="/translation/{{ t.slug }}">{{ t.artist }}</a></p>
+			{% endif %}
+			{% endfor %}
+		</div>
+	</div>
+
+</div>
+
+</br>
+<hr>
+
+{% endblock %}
