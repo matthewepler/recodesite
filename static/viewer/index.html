@@ -65,7 +65,7 @@ repo.fetchBranches(function(err, res){
 
         contents.fetchContent(function (err, res) {  
 
-           $("#code code").html(contents.rawContent);
+           $("#code code").html($( '<pre>' ).text( contents.rawContent ).html());
            $("#canvas-container h3").html(getURLParameter("path"));
            new Processing("pjs", contents.rawContent);
         });
