@@ -1,0 +1,110 @@
+
+
+{% extends "/layout.html" %}
+
+
+{% block body %}
+<!-- img  {
+    padding: 5px;
+}
+
+h5 {
+    text-decoration: underline;
+}
+
+li a {
+    color: black;
+}
+
+ul li img {
+    padding-bottom: 7px;
+    text-align: center;
+
+}
+
+.thumbnails img{
+    margin-left: 10px;
+    text-align: center;
+}
+
+#canvas-container {
+    text-align: center;
+} -->
+
+
+</style>
+<script src="/static/js/gh3/vendors/jquery-1.7.2.js"></script>
+<script src="/static/js/gh3/vendors/underscore.js"></script>
+<script src="/static/js/gh3/gh3.js"></script>
+<script src="/static/js/p.js"></script>
+
+<script>
+
+$(document).ready(function(){
+
+
+function getURLParameter(name) {
+    return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search)||[,""])[1].replace(/\+/g, '%20'))||null;
+}
+
+Gh3.client_id = "a199482938d9ff482aba";
+Gh3.client_secret = "189a51834c73b9ae638c89352049fe615995c746";
+var user = new Gh3.User("matthewepler");
+var repo = new Gh3.Repository("ReCode_Project", user);
+repo.fetchBranches(function(err, res){
+    var master = repo.getBranchByName("master");
+    master.fetchContents(function (err, res) {
+        var contents = master.getFileByName('README.md');
+
+        // if(getURLParameter("path") == undefined){
+        //     $("#code code").html("not found");
+        // } else {
+
+
+        contents.path = "Computer_Graphics_and_Art/" + {{ path_url }};
+
+        $("#gh-link").attr("href","http://github.com/matthewepler/ReCode_Project/tree/master/" + contents.path);
+
+
+        contents.fetchContent(function (err, res) {  
+
+           $("#code code").html(contents.rawContent);
+           $("#canvas-container h3").html({{ path_url }});
+           new Processing("pjs", contents.rawContent);
+        });
+        // }
+    });
+});
+});
+</script>
+
+   
+<div class="container">
+    <div class="span10 offset1" style="margin-top:100px">
+        {% for f in translation.files %}
+            {%  if f.main == "yes" %}
+                <h2>{{ f.title }}</h2>
+            {% endif %}
+        {% endfor %}
+        <h3>{{ translation.artist }}</h3>
+    </br>
+        <p>based on: <a href="/artwork/{{ original.slug }}">{{ original.title }}</a> by {{ original.artist }}, {{ original.date }}</p>
+        <div class="pull-right">
+            <a href={{ translation.repo_link }}>[repo]</a>
+        </div>
+        <hr style="margin:20px 0px 0px 0px">
+        </br>
+        <canvas id="pjs" width="1000" height="1000"></canvas>
+        </div>
+
+        <p><em><a id="gh-link" href="http://github.com/matthewepler/ReCode_Project">View on Github</a></em></p>
+
+        <div id="code">
+            <code style="white-space:pre;">
+            </code>
+        </div>
+      
+
+        
+
+{% endblock %}

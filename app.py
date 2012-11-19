@@ -39,9 +39,22 @@ def translation(trans_slug):
 		if translation.orig_title in a.title:	
 			orig = a
 
+	photo_url = ''
+
+	for f in translation.file_links:
+		if "pde" in f:
+			path_url = f[92:]
+		if 'jpg' in f:
+			photo_url = f
+		if 'png' in f:
+			photo_url = f
+
+	app.logger.debug( translation.photo_link)
+	app.logger.debug( photo_url )
 	templateData = {
 		'translation' : translation,
-		'original' : orig
+		'original' : orig,
+		'photo' : photo_url
 	}
 
 	return render_template("translation.html", **templateData)
@@ -53,47 +66,12 @@ def artwork( artwork_slug ):
 	
 	translations = []
 
-	artwork = models.Artwork.objects.get( slug = artwork_slug)
-	authentication_str = "?client_id=a199482938d9ff482aba&client_secret=189a51834c73b9ae638c89352049fe615995c746"
-	data_request = requests.get( artwork.api_link + authentication_str )
-	data = data_request.json
-	for f in data:
-		if not f['name'].startswith("_"):
-			catLink = f['url']
-			catName = f['name']
-			catName = catName[2:]
-			cat_request = requests.get( catLink + authentication_str )
-			catData = cat_request.json
-			if len(catData) > 2:
-				for c in catData:
-					if not c['name'].startswith("_"):
-						artist = c['name'].replace("_", " ")
-						data_url = c['url']
+	artwork = models.Artwork.objects.get( slug = artwork_slug )
 
-						test = models.Translation()
-						test.artist = artist
-						test.data_link = data_url
-						test.repo_link = catLink
-						test.category = catName
-						test.artwork_slug = artwork_slug
-						test.orig_artist = artwork.artist
-						test.orig_title = artwork.title
-						test.slug = slugify( artist + "-" + catName + "-" + artwork.artist )
-
-						hazTest = "no"
-
-						allTranslations = models.Translation.objects()
-						for a in allTranslations:
-							if a.artwork_slug is artwork_slug:
-								translations.append(t)
-
-						for t in translations:
-							if t.repo_link == test.repo_link:
-								hazTest = "yes"
-						if hazTest is "no":
-							test.save()
-							translations.append(test)
-
+	allTranslations = models.Translation.objects()
+	for t in allTranslations:
+		if t.artwork_slug in artwork_slug:
+			translations.append(t)
 
 	templateData = {
 		'artwork' : artwork,
@@ -134,7 +112,6 @@ def makedatamagic():
 	def getRepoContents( url_str ):
 		data_request = requests.get( url_str )
 		data = data_request.json
-		
 		# for every folder in the repo base directory...
 		for vol in data: 
 			name = vol['name']
@@ -149,7 +126,6 @@ def makedatamagic():
 				for piece in vol_data:
 					title_temp = piece['name']
 					if "-" in title_temp:
-
 						artwork = models.Artwork()
 						title_broken = title_temp.split( "-" )
 						title = title_broken[0].replace( "_" , " ")
@@ -171,75 +147,77 @@ def makedatamagic():
 						artwork.code_link = piece['html_url']
 						artwork.api_link = piece['url']
 						artwork.save()
-						app.logger.debug( artwork )
+						app.logger.debug( artwork.title + " - " + artwork.artist )
 
 						data_request = requests.get( artwork.api_link + authentication_str )
 						data = data_request.json
 						for folder in data:
-						if folder is not None:
-							fType = folder['type'].decode('UTF-8', 'strict')
-							fName = folder['name'].decode('UTF-8', 'strict')
-							if fType == "dir":
-								folder_name = folder['name'].decode('UTF-8', 'strict')
-								category = folder_name[2:]
-								app.logger.debug("category:" + category)
-								translation = models.Translation()
-								translation.category = category
-								contents_req = requests.get( folder['url'] + authentication_str )
-								contents_data = contents_req.json
-								for artist in contents_data:
-									artistName = artist['name'].decode('UTF-8', 'strict')
-									if not ".txt" in artistName:
-										app.logger.debug("artistName: " + artistName)
-										translation.artist = artistName
-										repo_link = artist['url'].decode('UTF-8', 'strict')
-										app.logger.debug("repo_link: " + repo_link)
-										translation.repo_link = repo_link
-										artist_contents_req = requests.get( artist['url'] + authentication_str)
-										artist_contents = artist_contents_req.json
-										for project in artist_contents:
-											app.logger.debug(project)
-											projectName = project['name'].decode('UTF-8', 'strict')
-											app.logger.debug("projectName: " + projectName)
-											translation.title = projectName
-											project_contents_req = requests.get( project['url'] + authentication_str)
-											project_data = project_contents_req.json
-											for pFile in project_data:
-												filename = pFile['name'].decode('UTF-8', 'strict')
-												app.logger.debug("filename: " + filename)
-												translation.files.append(filename)
-												file_link = pFile['url']
-												app.logger.debug("file_link: " + file_link)
-												translation.file_links.append(file_link)
-												if ".png" in filename:
-													photo_link = pFile['html_url']
-													app.logger.debug("photo_link: " + photo_link)
+							if folder is not None: # if there are translation folders inside the categories, go in
+								fType = folder['type'].decode('UTF-8', 'strict')
+								fName = folder['name'].decode('UTF-8', 'strict')
+								if fType == "dir":
+									folder_name = folder['name'].decode('UTF-8', 'strict')
+									category = folder_name[2:]
+									app.logger.debug("category:" + category)
+									contents_req = requests.get( folder['url'] + authentication_str )
+									contents_data = contents_req.json
+									for artist in contents_data:
+										artistName = artist['name'].decode('UTF-8', 'strict')
+										if not ".txt" in artistName:
+											app.logger.debug("artistName: " + artistName)
+											repo_link = artist['html_url'].decode('UTF-8', 'strict')
+											app.logger.debug("repo_link: " + repo_link)
+											artist_contents_req = requests.get( artist['url'] + authentication_str)
+											artist_contents = artist_contents_req.json
+											for project in artist_contents:
+												projectName = project['name'].decode('UTF-8', 'strict')
+												app.logger.debug("projectName: " + projectName)
+												project_contents_req = requests.get( project['url'] + authentication_str)
+												project_data = project_contents_req.json
+												for pFile in project_data:
+													if pFile is not None:
+														filename = pFile['name'].decode('UTF-8', 'strict')
+														file_link = pFile['url'].decode('UTF-8', 'strict')
+														photo_link = ""
+														if "png" in filename:
+																photo_link = pFile['html_url'].decode('UTF-8', 'strict')
+																app.logger.debug("photo_link: " + photo_link)
+														elif "jpg" in filename:
+																photo_link = pFile['html_url'].decode('UTF-8', 'strict')
+																app.logger.debug("photo_link: " + photo_link)
+															
+														translation = models.Translation()
+														translation.slug = slugify( artistName + category + filename )
+														
+														app.logger.debug( "slugify = " + artistName + " + " + category + " + " + filename)
+														
+														translation.photo_link = photo_link
+														translation.file_links.append(file_link)
+														translation.files.append(filename)
+														translation.title = projectName
+														translation.repo_link = repo_link
+														translation.artist = artistName
+														translation.category = category
+														
+														translation.orig_artist = artwork.artist
+														translation.orig_title = artwork.title
+														translation.artwork_slug = artwork.slug
+														translation.save()
+									
+	
+	def updatethatshit():
+		allArtworks = models.Artwork.objects()
+		for a in allArtworks:
+			if "v1" in a.source_detail:
+				a.date = "1976"
+				a.save()
+			if "v2" in a.source_detail:
+				a.date = "1977"
+				a.save()
+			if "v3" in a.source_detail:
+				a.date = "1978"
+				a.save()
 
-													translation.photolink = photo_link
-												elif ".jpg" in filename:
-													photo_link = pFile['html_url']
-													app.logger.debug("photo_link: " + photo_link)
-
-													translation.photo_link = photo_link
-												elif ".pde" in filename:
-													raw_request = requests.get( file_link + authentication_str)
-													raw_data = raw_request.json
-													raw = raw_data['content']
-													raw_encoded = raw.decode('base64', 'strict')
-													translation.raw_files.append( raw_encoded )
-													translation.raw_files.append( raw_encoded )
-
-													translation.slug = slugify( artistName + category + filename )
-
-								translation.orig_artist = artwork.artist
-								translation.orig_title = artwork.title
-								translation.artwork_slug = artwork.slug
-								translation.save()
-
-								app.logger.debug(translation.slug)
-
-		return redirect("/")
-						
 
 	def getDownloads( url_str ):
 		data_request = requests.get( url_str + authentication_str )
@@ -258,23 +236,9 @@ def makedatamagic():
 	downloads = []
 	getDownloads( downloads_url )
 	getRepoContents( base_url )
+	updatethatshit()
 
-
-# --------------------------------------------------------- UPDATES
-@app.route("/updatethatshit")
-def updatethatshit():
-
-	allArtworks = models.Artwork.objects()
-	for a in allArtworks:
-		if "v1" in a.source_detail:
-			a.date = "1976"
-		if "v2" in a.source_detail:
-			a.date = "1977"
-		if "v3" in a.source_detail:
-			a.date = "1978"
-
-	return redirect("/")
-		
+	return redirect("/")		
 
 
 #------------------------------------- 404 HANDLER >>>

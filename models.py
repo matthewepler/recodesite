@@ -3,6 +3,21 @@ from mongoengine import *
 
 from flask.ext.mongoengine.wtf import model_form
 
+
+class Translation( Document ):
+	title = StringField()
+	artist = StringField()
+	orig_artist = StringField()
+	orig_title = StringField()
+	photo_link = StringField()
+	repo_link = StringField()
+	category = StringField()
+	slug = StringField()
+	artwork_slug = StringField()
+	files = ListField( StringField() )
+	file_links = ListField( StringField() )
+	raw_files = ListField( StringField() )
+
 class Artwork( Document ):
 	title = StringField()
 	artist = StringField()
@@ -24,20 +39,6 @@ class Artist( EmbeddedDocument ):
 	photo_link = StringField();
 	links = ListField( StringField() )
 
-
-class Translation( Document ):
-	title = StringField()
-	artist = StringField()
-	orig_artist = StringField()
-	orig_title = StringField()
-	photo_link = StringField()
-	repo_link = StringField()
-	category = StringField()
-	slug = StringField()
-	artwork_slug = StringField()
-	files = ListField( StringField() )
-	file_links = ListField( StringField() )
-	raw_files = ListField( StringField() )
 
 class Volume( Document ):
 	title = StringField()
