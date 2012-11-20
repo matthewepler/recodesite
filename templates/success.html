@@ -11,20 +11,20 @@
 		<p>based on: <a href="/artwork/{{ orig.slug }}">{{ orig.title }}</a> by {{ orig.artist }}, {{ orig.date }}</p>
 		<hr style="margin:20px 0px 0px 0px">
 		</br>
-		<!-- open script tag -->
-{{ script1 }}
+	
 
-<!-- processing code -->
+<script src='/static/js/processing.js'></script>
+<script type='text/processing' data-processing-target='mycanvas'>
+
 {{ translation.code|safe }}
 
-<!-- close script tag -->
-{{ script2 }}
+</script>
 
-<!-- canvas element -->
-{{ canvas }}
+<canvas id='mycanvas' width='1000' height='1000' style='margin-top:8%;margin-left:40%;margin-bottom:100px'></canvas>
+
 	</br>
 		<pre>
-		{{ code }}	
+		{{ translation.code }}	
 		</pre>
 	</div>
 </div>

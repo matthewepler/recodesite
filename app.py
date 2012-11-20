@@ -2,15 +2,16 @@ import os, json, requests
 import re
 from unidecode import unidecode
 
-from flask import Flask, jsonify, request, render_template, redirect, abort
-from mongoengine import *
+from flask import Flask, jsonify, request, render_template, redirect, abort, Markup
 from flask.ext.mongoengine import mongoengine
 
 import models
 
-connect( 'mydata', host=os.environ.get('MONGOLAB_URI') )
+mongoengine.connect( 'mydata', host=os.environ.get('MONGOLAB_URI') )
+AUTH_STR = os.environ.get('AUTH_STR')
 
 app = Flask(__name__)   
+app.config['CSRF_ENABLED'] = False
 
 
 #------------------------------------- MAIN PAGE >>>
@@ -25,39 +26,71 @@ def index():
 
 	return render_template( "index.html", **templateData )
 
+@app.route("/test")
+def test():
+	# script1 = Markup("<script src='/static/js/processing.js'></script><script type='text/processing' data-processing-target='mycanvas'>")
+	# script2 = Markup("</script>")
+	# canvas = Markup("<canvas id='mycanvas' width='1000' height='1000' style='margin-top:8%;margin-left:40%;margin-bottom:100px'></canvas>")
+
+	# templateData = {
+	# 	'script1' : script1,
+	# 	'canvas' : canvas,
+	# 	'script2' : script2
+	# }
+
+	return render_template("/test.html")
 
 
-@app.route( "/translation/<trans_slug>")
-def translation(trans_slug):
-
-	orig = None
-
-	translation = models.Translation.objects.get( slug=trans_slug )
+@app.route("/submit/<artwork_slug>", methods=['GET', 'POST'])
+def submit( artwork_slug ):
 	
-	allArtworks = models.Artwork.objects()
-	for a in allArtworks:
-		if translation.orig_title in a.title:	
-			orig = a
+	orig = models.Artwork.objects.get( slug = artwork_slug )
+	submit_form = models.TranslationForm(request.form)
 
-	photo_url = ''
+	if request.method == "POST":
+	
+		translation = models.Translation()
 
-	for f in translation.file_links:
-		if "pde" in f:
-			path_url = f[92:]
-		if 'jpg' in f:
-			photo_url = f
-		if 'png' in f:
-			photo_url = f
+		translation.title = request.form.get('title', 'untitled')
+		app.logger.debug( request.form.get('title') )
 
-	app.logger.debug( translation.photo_link)
-	app.logger.debug( photo_url )
-	templateData = {
-		'translation' : translation,
-		'original' : orig,
-		'photo' : photo_url
-	}
+		translation.artist = request.form.get('artist')
+		app.logger.debug( request.form.get('artist' ) )
 
-	return render_template("translation.html", **templateData)
+		translation.category = request.form.get('category')
+		app.logger.debug( request.form.get('category') )
+
+		translation.description = request.form.get('description', 'None')
+		app.logger.debug( request.form.get('description') 
+			)
+		translation.code = request.form.get('code')
+		app.logger.debug( request.form.get('code') )
+
+		translation.artwork_slug = orig.slug
+		translation.slug = slugify( translation.artist + "-" + translation.category + "-" + orig.title + "-" + orig.artist )
+		
+		translation.save()
+
+		script1 = Markup("<script src='/static/js/processing.js'></script><script type='text/processing' data-processing-target='mycanvas'>")
+		script2 = Markup("</script>")
+		canvas = Markup("<canvas id='mycanvas' width='1000' height='1000' style='margin-top:8%;margin-left:40%;margin-bottom:100px'></canvas>")
+		
+		
+		templateData = {
+			'translation' : translation,
+			'orig' : orig,
+			'script1' : script1,
+			'canvas' : canvas,
+			'script2' : script2
+		}
+
+		return render_template("success.html", **templateData)
+		
+
+	else:
+		
+
+		return render_template("submit.html", orig=orig)
 
 
 
@@ -79,6 +112,36 @@ def artwork( artwork_slug ):
 	}
 
 	return render_template("artwork.html", **templateData)
+
+
+@app.route( "/translation/<trans_slug>")
+def translation(trans_slug):
+
+	scriptTag = Markup("<script type='application/processing' target='mysketch'>")
+	code = ""
+	scriptTag2 = Markup("</script>")
+	canvasTag = Markup("<canvas id='mysketch' width='1000' height='1000' style='margin-top:8%;margin-left:40%;margin-bottom:100px'></canvas>")
+	
+	orig = None
+	translation = models.Translation.objects.get( slug=trans_slug )
+	
+
+	allArtworks = models.Artwork.objects()
+	for a in allArtworks:
+		if translation.orig_title in a.title:	
+			orig = a
+
+
+	templateData = {
+		'translation' : translation,
+		'original' : orig,
+		'script1' : scriptTag,
+		'code' : code,
+		'canvas' : canvasTag,
+		'script2' : scriptTag2
+	}
+
+	return render_template("translation.html", **templateData)
 
 
 @app.route("/translationslist/<filter_str>")

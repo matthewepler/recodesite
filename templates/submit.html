@@ -1,0 +1,104 @@
+{% extends "/layout.html" %}
+
+
+{% block body %}
+
+<div class="row-fluid offset1" style="margin-top:100px">
+	<h1>Translation Form</h1>
+</div>
+	<hr>
+<div class="row-fluid offset1" style="margin-top:50px">
+	<div class="span10" name="display">
+		<div class="span6" name="image">
+			<img src="{{ orig.photo_link }}" width="400" height="400">
+		</div>
+		<div class="span4" name="data" style="margin-top:-20px">
+			<p><h2>{{ orig.title }}</h2></p>
+			<p><h3>{{ orig.artist }}</h3></p>
+			</br>
+			source: {{ orig.source }}
+			</br>
+			source document: <a href={{ orig.source_link }} target="_blank">{{ orig.source_detail }}</a>
+			</br>
+			date:   {{ orig.date }} 
+			</br>
+			</br>
+			description:
+			</br>
+			{{ orig.description }}
+			</br>
+			</br>
+			<a href={{ orig.code_link }} target="_blank"> GitHub repository </a>	
+		</div>
+	</div>
+</div>
+</br>
+<div class="row-fluid offset1">
+<a href="/artwork/{{orig.slug}}" class="btn btn-danger">Cancel</a>
+</div>
+<hr>
+
+<div class="row-fluid offset1" style="margin-top:25px">
+	<form class=".form-horizontal" id="submission" action="/submit/{{orig.slug}}" method='POST'>
+		
+		<div class="span4">
+			<!-- Artist -->
+			<div class-"control-group">
+				<label class="control-label" for="artist">Name</label>
+				<div class="controls">
+					<input class="input-block-level" type="text" id="artist" name="artist" placeholder="First Last">
+				</div>
+			</div>
+			</br>
+			<!-- Title -->
+			<div class-"control-group">
+				<label class="control-label" for="title">Title</label>
+				<div class="controls">
+					<input class="input-block-level" type="text" id="title" name="title" placeholder:"untitled">
+				</div>
+			</div>
+			</br>
+			<!-- Category -->
+			<div class-"control-group">
+				<label class="control-label" for="category">Category</label>
+				<div class="controls">
+					<select class="input-block-level" id="category" name="category">
+						<option value="direct">Direct Translation</option>
+						<option value="experimental">Experimental</option>
+					</select>
+				</div>
+			</div>
+			</br>
+			<!-- Description -->
+			<div class-"control-group">
+				<label class="control-label" for="description">Description</label>
+				<div class="controls">
+					<textarea class="input-block-level" cols="6" rows="12" id="description" name="description"></textarea>
+				</div>
+			</div>
+			</br>
+			</br>
+			<!-- Submit -->
+			<div>
+ 				 <input type="submit" class="btn btn-primary">
+ 				 <em><span class="help-block"></span></em>
+			</div>
+		</div>
+
+		<div class="span6">
+			<!-- Code -->
+			<div class-"control-group">
+				<label class="control-label" for="code">Paste Code >></label>
+				<em><span class="help-block">(All code in one document. Move classes, etc. below your void/draw functions)</span></em>
+				<div class="controls">
+					<textarea class="input-block-level" rows="42" cols="20" id="code" name="code"></textarea>
+				</div>
+			</div>
+		</div>
+	</form>
+</div>
+		
+
+
+
+{% endblock %}

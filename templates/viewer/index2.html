@@ -1,0 +1,99 @@
+<html>
+<head>
+<style>
+img  {
+    padding: 5px;
+}
+
+h5 {
+    text-decoration: underline;
+}
+
+li a {
+    color: black;
+}
+
+ul li img {
+    padding-bottom: 7px;
+    text-align: center;
+
+}
+
+.thumbnails img{
+    margin-left: 10px;
+    text-align: center;
+}
+
+#canvas-container {
+    text-align: center;
+}
+
+
+</style>
+<script src="/static/js/gh3/vendors/jquery-1.7.2.js"></script>
+<script src="/static/js/gh3/vendors/underscore.js"></script>
+<script src="/static/js/gh3/gh3.js"></script>
+<script src="/static/js/p.js"></script>
+
+<script>
+
+$(document).ready(function(){
+
+
+function getURLParameter(name) {
+    return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search)||[,""])[1].replace(/\+/g, '%20'))||null;
+}
+
+Gh3.client_id = "a199482938d9ff482aba";
+Gh3.client_secret = "189a51834c73b9ae638c89352049fe615995c746";
+var user = new Gh3.User("matthewepler");
+var repo = new Gh3.Repository("ReCode_Project", user);
+// repo.fetchBranches(function(err, res){
+//     var master = repo.getBranchByName("master");
+//     master.fetchContents(function (err, res) {
+//         var contents = master.getFileByName('README.md');
+
+        contents = "/Sine.pde"
+
+        // $("#gh-link").attr("href","http://github.com/matthewepler/ReCode_Project/tree/master/" +contents.path);
+
+
+        contents.fetchContent(function (err, res) {  
+
+           $("#code code").html(contents.rawContent);
+           $("#canvas-container h3").html("/Sine.pde");
+           new Processing("pjs", contents.rawContent);
+        });
+        
+    });
+});
+});
+</script>
+   
+</head>
+    <body>
+        <div class="hero-unit" align="center" style="padding-bottom:40px">
+            <a href="/" align="center" style="margin-top:10">
+                <img style="width:50px" src="/static/img/recode_logo.png">
+            </a>
+            <h2 align="center">THE RECODE PROJECT</h2>
+            <p>An active archive of computer art.</p>
+        </div> 
+        
+        <div id="canvas-container">
+        <h3></h3>
+
+        <canvas id="pjs" width="1000" height="1000"></canvas>
+        </div>
+
+        <p><em><a id="gh-link" href="http://github.com/matthewepler/ReCode_Project">View on Github</a></em></p>
+
+        <div id="code">
+            <code style="white-space:pre;">
+            </code>
+        </div>
+
+       
+
+</body>
+</html>
