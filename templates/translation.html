@@ -4,29 +4,36 @@
 {% block body %}
 
 <div class="container">
-	<div class="span10 offset1" style="margin-top:100px">
-		<h2>{{translation.title}}</h2>
-		<h3>{{ translation.artist }}</h3>
-	</br>
-		<p>based on: <a href="/artwork/{{ orig.slug }}">{{ orig.title }}</a> by {{ orig.artist }}, {{ orig.date }}</p>
-		<hr style="margin:20px 0px 0px 0px">
+	<div class="row-fluid">
+		<div class="span10" style="margin-top:100px">
+			<h2>{{translation.title}}</h2>
+			<h3>{{ translation.artist }}</h3>
 		</br>
-		<!-- open script tag -->
-{{ script1 }}
+			<p><strong>Based on: </strong><a href="/artwork/{{ orig.slug }}">{{ orig.title }}</a> by {{ orig.artist }}, {{ orig.date }}</p>
+			</br>
+			<p><strong>Description: </p></strong>
+			<p>{{translation.description}}</p>
+			<hr style="margin:20px 0px 0px 0px">
+			</br>
+			
 
-<!-- processing code -->
-{{ translation.code|safe }}
-
-<!-- close script tag -->
-{{ script2 }}
-
-<!-- canvas element -->
-{{ canvas }}
+		
+		{% if translation.photo|length > 20 %}
+		<img src={{ translation.photo }} style="align:center">
+		{% elif translation.video|length > 5 %}
+		{{ translation.video|safe }}
+		{% endif %}
+		</div>
+	</div>
 	</br>
-		<pre>
-		{{ code }}	
-		</pre>
+	<div class="row-fluid">
+		<div class="span11">
+			<pre>
+			{{ translation.code }}	
+			</pre>
+		</div>
 	</div>
 </div>
+
 
 {% endblock %}

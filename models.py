@@ -8,11 +8,13 @@ class Translation( Document ):
 	title = StringField()
 	artist = StringField(required=True)
 	category = StringField(required=True)
-	photo_link = StringField()
-	repo_link = StringField()
 	slug = StringField()
 	artwork_slug = StringField()
 	file_links = ListField( StringField() )
+	code = StringField()
+	photo = StringField()
+	description = StringField()
+	video = StringField()
 
 class Artwork( Document ):
 	title = StringField()
