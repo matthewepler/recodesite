@@ -5234,6 +5234,8 @@ input[type="submit"].btn.btn-mini {
   float: left;
   margin-bottom: 20px;
   margin-left: 20px;
+  width:350px;
+  height:400px;
 }
 
 .thumbnail {
@@ -5263,7 +5265,7 @@ a.thumbnail:hover {
 
 .thumbnail > img {
   display: block;
-  max-width: 100%;
+  max-width: 300px;
   margin-right: auto;
   margin-left: auto;
   padding-bottom: 5px
@@ -5272,6 +5274,7 @@ a.thumbnail:hover {
 .thumbnail .caption {
   /*padding: 9px;*/
   color: #ffffff;
+  width:300px;
 }
 
 .label,

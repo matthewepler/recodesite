@@ -10,85 +10,96 @@ h5 {
     text-decoration: underline;
 }
 
-li a {
-    color: black;
+
+.thumbnail .caption {
+    margin-left:15px;
+    width:300px;
 }
 
-ul li img {
-    padding-bottom: 7px;
-    text-align: center;
 
-}
-
-.thumbnails img{
+.thumbnail img{
     margin-left: 10px;
-    text-align: center;
+    width:300px;
+    height:300px;
 }
 
+.thumbnail > li {
+    width:300px;
+    height:300px;
+}
 
+.thumbnail {
+    text-align:left;
+    width:300px;
+    height:400px;
+}
 </style>
 {% endblock %}
 
 {% block body %}    
 </head>
     <body>
-        <div class="hero-unit" align="center" style="padding-top:90px;padding-bottom:40px">
+        <div class="hero-unit" align="center" style="padding-top:125px;padding-bottom:40px">
             <a href="/" align="center" style="margin-top:10">
                 <img src="static/img/recode_logo.png">
             </a>
             <h2 align="center">THE RECODE PROJECT</h2>
             <p>An active archive of computer art.</p>
-            <div class="pull-right">
-                <a href="/translationslist/hasTranslation" style="color:#B10800">see completed works</a>
-            </div>
+            <div>
+                <a href="/alltranslations" style="color:#AB0000">see all translations</a>
+             </div>
         </div> 
         <!-- intro text --> 
-        <div class="row-fluid">
-            <div class="span4 offset1">
+        <div class="row-fluid" style="margin-bottom:30px">
+            <div class="span6 offset1">
                 </br>
                 <p>
-                The ReCode Project is a community-driven effort to preserve computer art by translating it into a modern programming language (<a href="http://processing.org" target="_blank">Processing</a>).
-                </p>
-                <p> 
+                The ReCode Project is a community-driven effort to preserve computer art by translating it into a modern programming language (<a href="http://processing.org" target="_blank">Processing</a>). 
                 Every translated work will be available to the public and contemporary artists to learn from, share, and build on. 
                 </p>
                 <p>
-                To participate, visit our <a href="https://github.com/matthewepler/ReCode_Project" target="_blank">GitHub repo</a>.
-                </p>
-                <p>List View of artworks: </br>
-                    <a href="/translationslist/title">[by title]</a></br>
-                    <a href="/translationslist/artist">[by artist]</a></br>
-                    <a href="/translationslist/hasTranslation">[translated]</a></br>
+                To participate, find an artwork below that you would like to translate. Email us your Processing sketch or visit our <a href="https://github.com/matthewepler/ReCode_Project" target="_blank">GitHub repo</a>.
                 </p>
             </div>
-            <div class="span6 offset1">
-                <h3>Launch Event: Hackathon</h3>
-                <p><strong>Saturday, November 17</strong></p>
-                <p><strong>10am - 7pm</strong></p>
-                <p><strong>721 Broadway, New York, NY 10003</strong></p>
-                <p><strong><a href="http://webchat.freenode.net/" target="_blank">IRC Freenode</a> channel = #recodeproject</strong></p>
-                <p>Sign-up for physical or virtual attendance at our <a href="http://recodeproject.eventbrite.com/" target="_blank">Eventbrite page</a></p>
+            <!-- SEARCH -->
+            <div class="span4 offset1">
+                <h4>Search Artworks</h4>
+                By Keyword
+                <form class="form-inline" name="keyword_str" action="/search" method="post">
+                    <input type="text" class="input" id="keyword" name="keyword" placeholder="Artist, title, year...">
+                    <button type="submit" class="btn">Go</button>
+                </form>
+                or Filter
+                <form class="form-inline" name="filter_select" action="/translationslist" method="post">
+                    <select name='filter'>
+                        <option selected="selected" value="hasTranslation">Has Translation</option>
+                        <option value="noTranslation">Awaiting Translation</option>
+                        <option value="direct">Direct Translations Only</option>
+                        <option value="experimental">Experimental Translations Only</option>
+                        <option value="artist">Original Artist, A-Z</option>
+                        <option value="title">Original Title, A-Z</option>
+                    </select>
+                    <button type="submit" class="btn">Go</button>
+                </form>
             </div>
         </div>
  
         <!-- current projects text & jump links -->
-        <div class="row-fluid">
+        <div class="row-fluid" style="background-color:#EEE">
             <div class="span10 offset1">
                 <h3>Current Projects</h3>
                 <p>
-                    "Computer Graphics and Art" was a quartley magazine published between 1976 and 1978. We are using PDF copies of the entire run of the magazine as our starting point for the project. On the 17th of November, coders from around the world will gather to translate these works. The majority of them have no code published alongside the original result. There will be opportunity for a variety of interpretations and approaches, all of which can become the starting point for a new work. [ click on the images below to go to its github folder ]
+                    "Computer Graphics and Art" was a quartley magazine published between 1976 and 1978. We are using PDF copies of the entire run of the magazine as our starting point for the project. On the 17th of November, coders from around the world will gather to translate these works. The majority of them have no code published alongside the original result. There will be opportunity for a variety of interpretations and approaches, all of which can become the starting point for a new work.
                 </p>
                 <p>
-                    After the hackathon event, we will be posting original and translated works on this site. Don't worry, we'll blast your Twittersphere when it happens.
-                </p>
-                <p>
-                    PDFs come from <a href="http://dada.compart-bremen.de" target="_blank">compart</a> via <a href="http://rhizome.org/editorial/2012/sep/25/prosthetic-knowledge-picks-computer-graphics-art-1/" target="_blank">Rhizome</a>.
+                    PDFs of the original source documents come from <a href="http://dada.compart-bremen.de" target="_blank">compart</a> via <a href="http://rhizome.org/editorial/2012/sep/25/prosthetic-knowledge-picks-computer-graphics-art-1/" target="_blank">Rhizome</a>.
                 </p>
                 <p>
                     <a href="https://github.com/downloads/matthewepler/ReCode_Project/Computer_Graphics_and_Art_PDFs.zip">Download all issues </a>
                     or jump to a section using the links below to preview the contents of each issue.
                 </p>
             <hr>
+            </br>
             <!-- jump links -->
             <div class="row">
                 <div class="span3 offset1"</div>
@@ -123,23 +134,25 @@ ul li img {
                 </br>
                 </br>
                 </br>
-                <h5>Vol.1 No.2 (May, 1976) <a href="https://github.com/downloads/matthewepler/ReCode_Project/COMPUTER_GRAPHICS_AND_ART_May1976.pdf" id="12">[PDF]</a><a href="https://github.com/matthewepler/ReCode_Project/tree/master/Computer_Graphics_and_Art/v1n2"> [repo]</a></h5>
+                <h5>Vol.1 No.2 (May, 1976) <a href="https://github.com/downloads/matthewepler/ReCode_Project/COMPUTER_GRAPHICS_AND_ART_May1976.pdf" id="12">[PDF]</a></h5>
             </div>
             
             <ul class="thumbnails">  
             {% for a in artworks %}
                 {% if a.source_detail == "v1n2" %}           
-                    <li class="span4">
+                    <li>
                     <div class="thumbnail">
-                    <a href="/artwork/{{ a.slug }}"><img src={{ a.photo_link }}><p>{{ a.artist }}</p>
-                    </a>
+                        <a href="/artwork/{{ a.slug }}"><img src={{ a.photo_link }}></a>
+                        <div class="caption">
+                            <a href="/artwork/{{ a.slug }}">{{ a.title }}</a>
+                            <strong><p style="color:black">{{ a.artist }}</p></strong>
+                        </div>
                     </div>
                     </li>  
                 {% endif %}
             {% endfor %}  
             </ul>
         </div>
-        </br>
         </br>
 
         <div class="container-fluid offset1">   
@@ -148,23 +161,25 @@ ul li img {
                 </br>
                 </br>
                 </br>
-                <h5>Vol.1 No.3 (August, 1976) <a href="https://github.com/downloads/matthewepler/ReCode_Project/COMPUTER_GRAPHICS_AND_ART_Aug1976.pdf" id="13">[PDF]</a><a href="https://github.com/matthewepler/ReCode_Project/tree/master/Computer_Graphics_and_Art/v1n3"> [repo]</a></h5>
+                <h5>Vol.1 No.3 (August, 1976) <a href="https://github.com/downloads/matthewepler/ReCode_Project/COMPUTER_GRAPHICS_AND_ART_Aug1976.pdf" id="13">[PDF]</a></h5>
             </div>
 
             <ul class="thumbnails">
             {% for a in artworks %}
                 {% if a.source_detail == "v1n3" %}                       
-                    <li class="span4">
+                    <li>
                     <div class="thumbnail">
-                    <a href="/artwork/{{ a.slug }}"><img src={{ a.photo_link }}><p>{{ a.artist }}</p>
-                    </a>
+                        <a href="/artwork/{{ a.slug }}"><img src={{ a.photo_link }}></a>
+                        <div class="caption">
+                            <a href="/artwork/{{ a.slug }}">{{ a.title }}</a>
+                            <strong><p style="color:black">{{ a.artist }}</p></strong>
+                        </div>
                     </div>
                     </li>  
                 {% endif %}
             {% endfor %}  
             </ul>
         </div>
-        </br>
         </br>
 
         <div class="container-fluid offset1">   
@@ -173,23 +188,25 @@ ul li img {
                 </br>
                 </br>
                 </br>
-                <h5>Vol.1 No.4 (November, 1976) <a href="https://github.com/downloads/matthewepler/ReCode_Project/COMPUTER_GRAPHICS_AND_ART_Nov1976.pdf" id="14">[PDF]</a><a href="https://github.com/matthewepler/ReCode_Project/tree/master/Computer_Graphics_and_Art/v1n4"> [repo]</a></h5>
+                <h5>Vol.1 No.4 (November, 1976) <a href="https://github.com/downloads/matthewepler/ReCode_Project/COMPUTER_GRAPHICS_AND_ART_Nov1976.pdf" id="14">[PDF]</a></h5>
             </div>
 
             <ul class="thumbnails">
             {% for a in artworks %}
                 {% if a.source_detail == "v1n4" %}                       
-                    <li class="span4">
+                    <li>
                     <div class="thumbnail">
-                    <a href="/artwork/{{ a.slug }}"><img src={{ a.photo_link }}><p>{{ a.artist }}</p>
-                    </a>
+                        <a href="/artwork/{{ a.slug }}"><img src={{ a.photo_link }}></a>
+                        <div class="caption">
+                            <a href="/artwork/{{ a.slug }}">{{ a.title }}</a>
+                            <strong><p style="color:black">{{ a.artist }}</p></strong>
+                        </div>
                     </div>
                     </li>  
                 {% endif %}
             {% endfor %}  
             </ul>
         </div>
-        </br>
         </br>
         
         <div class="container-fluid offset1">       
@@ -198,23 +215,25 @@ ul li img {
                 </br>
                 </br>
                 </br>
-                <h5>Vol.2 No.1 (February, 1977) <a href="https://github.com/downloads/matthewepler/ReCode_Project/COMPUTER_GRAPHICS_AND_ART_Feb1977.pdf">[PDF]</a><a href="https://github.com/matthewepler/ReCode_Project/tree/master/Computer_Graphics_and_Art/v2n1"> [repo]</a></h5>
+                <h5>Vol.2 No.1 (February, 1977) <a href="https://github.com/downloads/matthewepler/ReCode_Project/COMPUTER_GRAPHICS_AND_ART_Feb1977.pdf">[PDF]</a></h5>
             </div>
             
             <ul class="thumbnails">
             {% for a in artworks %}
                 {% if a.source_detail == "v2n1" %}                       
-                    <li class="span4">
+                    <li>
                     <div class="thumbnail">
-                    <a href="/artwork/{{ a.slug }}"><img src={{ a.photo_link }}><p>{{ a.artist }}</p>
-                    </a>
+                        <a href="/artwork/{{ a.slug }}"><img src={{ a.photo_link }}></a>
+                        <div class="caption">
+                            <a href="/artwork/{{ a.slug }}">{{ a.title }}</a>
+                            <strong><p style="color:black">{{ a.artist }}</p></strong>
+                        </div>
                     </div>
                     </li>  
                 {% endif %}
             {% endfor %}  
             </ul>
         </div>
-        </br>
         </br>
 
         <div class="container-fluid offset1">          
@@ -223,23 +242,25 @@ ul li img {
                 </br>
                 </br>
                 </br>
-                <h5>Vol.2 No.2 (May, 1977) <a href="https://github.com/downloads/matthewepler/ReCode_Project/COMPUTER_GRAPHICS_AND_ART_May1977.pdf">[PDF]</a><a href="https://github.com/matthewepler/ReCode_Project/tree/master/Computer_Graphics_and_Art/v2n2"> [repo]</a></h5>
+                <h5>Vol.2 No.2 (May, 1977) <a href="https://github.com/downloads/matthewepler/ReCode_Project/COMPUTER_GRAPHICS_AND_ART_May1977.pdf">[PDF]</a></h5>
             </div>
 
             <ul class="thumbnails">
             {% for a in artworks %}
                 {% if a.source_detail == "v2n2" %}                       
-                    <li class="span4">
+                    <li>
                     <div class="thumbnail">
-                    <a href="/artwork/{{ a.slug }}"><img src={{ a.photo_link }}><p>{{ a.artist }}</p>
-                    </a>
+                        <a href="/artwork/{{ a.slug }}"><img src={{ a.photo_link }}></a>
+                        <div class="caption">
+                            <a href="/artwork/{{ a.slug }}">{{ a.title }}</a>
+                            <strong><p style="color:black">{{ a.artist }}</p></strong>
+                        </div>
                     </div>
                     </li>  
                 {% endif %}
             {% endfor %}  
             </ul>
         </div>
-        </br>
         </br>
         
         <div class="container-fluid offset1">      
@@ -248,23 +269,25 @@ ul li img {
                 </br>
                 </br>
                 </br>
-                <h5>Vol.2 No.3 (August, 1977) <a href="https://github.com/downloads/matthewepler/ReCode_Project/COMPUTER_GRAPHICS_AND_ART_Aug1977.pdf">[PDF]</a><a href="https://github.com/matthewepler/ReCode_Project/tree/master/Computer_Graphics_and_Art/v2n3"> [repo]</a></h5>
+                <h5>Vol.2 No.3 (August, 1977) <a href="https://github.com/downloads/matthewepler/ReCode_Project/COMPUTER_GRAPHICS_AND_ART_Aug1977.pdf">[PDF]</a></h5>
             </div>
 
             <ul class="thumbnails">
             {% for a in artworks %}
                 {% if a.source_detail == "v2n3" %}                       
-                    <li class="span4">
+                   <li>
                     <div class="thumbnail">
-                    <a href="/artwork/{{ a.slug }}"><img src={{ a.photo_link }}><p>{{ a.artist }}</p>
-                    </a>
+                        <a href="/artwork/{{ a.slug }}"><img src={{ a.photo_link }}></a>
+                        <div class="caption">
+                            <a href="/artwork/{{ a.slug }}">{{ a.title }}</a>
+                            <strong><p style="color:black">{{ a.artist }}</p></strong>
+                        </div>
                     </div>
                     </li>  
                 {% endif %}
             {% endfor %}  
             </ul>
         </div>
-        </br>
         </br>
         
         <div class="container-fluid offset1">  
@@ -273,23 +296,25 @@ ul li img {
                 </br>
                 </br>
                 </br>
-                <h5>Vol.2 No.4 (November, 1977) <a href="https://github.com/downloads/matthewepler/ReCode_Project/COMPUTER_GRAPHICS_AND_ART_Nov1977.pdf">[PDF]</a><a href="https://github.com/matthewepler/ReCode_Project/tree/master/Computer_Graphics_and_Art/v2n4"> [repo]</a></h5>
+                <h5>Vol.2 No.4 (November, 1977) <a href="https://github.com/downloads/matthewepler/ReCode_Project/COMPUTER_GRAPHICS_AND_ART_Nov1977.pdf">[PDF]</a></h5>
             </div>
 
             <ul class="thumbnails">
             {% for a in artworks %}
                 {% if a.source_detail == "v2n4" %}                       
-                    <li class="span4">
+                    <li>
                     <div class="thumbnail">
-                    <a href="/artwork/{{ a.slug }}"><img src={{ a.photo_link }}><p>{{ a.artist }}</p>
-                    </a>
+                        <a href="/artwork/{{ a.slug }}"><img src={{ a.photo_link }}></a>
+                        <div class="caption">
+                            <a href="/artwork/{{ a.slug }}">{{ a.title }}</a>
+                            <strong><p style="color:black">{{ a.artist }}</p></strong>
+                        </div>
                     </div>
                     </li>  
                 {% endif %}
             {% endfor %}  
             </ul>
         </div>
-        </br>
         </br>
         
         <div class="container-fluid offset1">    
@@ -298,23 +323,25 @@ ul li img {
                 </br>
                 </br>
                 </br>
-                <h5>Vol.3 No.1 (February, 1978) <a href="https://github.com/downloads/matthewepler/ReCode_Project/COMPUTER_GRAPHICS_AND_ART_Feb1978.pdf">[PDF]</a><a href="https://github.com/matthewepler/ReCode_Project/tree/master/Computer_Graphics_and_Art/v3n1"> [repo]</a></h5>
+                <h5>Vol.3 No.1 (February, 1978) <a href="https://github.com/downloads/matthewepler/ReCode_Project/COMPUTER_GRAPHICS_AND_ART_Feb1978.pdf">[PDF]</a></h5>
             </div>
 
             <ul class="thumbnails">
             {% for a in artworks %}
                 {% if a.source_detail == "v3n1" %}                       
-                    <li class="span4">
+                    <li>
                     <div class="thumbnail">
-                    <a href="/artwork/{{ a.slug }}"><img src={{ a.photo_link }}><p>{{ a.artist }}</p>
-                    </a>
+                        <a href="/artwork/{{ a.slug }}"><img src={{ a.photo_link }}></a>
+                        <div class="caption">
+                            <a href="/artwork/{{ a.slug }}">{{ a.title }}</a>
+                            <strong><p style="color:black">{{ a.artist }}</p></strong>
+                        </div>
                     </div>
                     </li>  
                 {% endif %}
             {% endfor %}  
             </ul>
         </div>
-        </br>
         </br>
         
         <div class="container-fluid offset1">        
@@ -323,16 +350,19 @@ ul li img {
                 </br>
                 </br>
                 </br>
-                <h5>Vol.3 No.2 (May, 1978) <a href="https://github.com/downloads/matthewepler/ReCode_Project/COMPUTER_GRAPHICS_AND_ART_May1978.pdf">[PDF]</a><a href="https://github.com/matthewepler/ReCode_Project/tree/master/Computer_Graphics_and_Art/v3n2"> [repo]</a></h5>
+                <h5>Vol.3 No.2 (May, 1978) <a href="https://github.com/downloads/matthewepler/ReCode_Project/COMPUTER_GRAPHICS_AND_ART_May1978.pdf">[PDF]</a></h5>
             </div>
 
             <ul class="thumbnails">
             {% for a in artworks %}
                 {% if a.source_detail == "v3n2" %}                       
-                    <li class="span4">
+                    <li>
                     <div class="thumbnail">
-                    <a href="/artwork/{{ a.slug }}"><img src={{ a.photo_link }}><p>{{ a.artist }}</p>
-                    </a>
+                        <a href="/artwork/{{ a.slug }}"><img src={{ a.photo_link }}></a>
+                        <div class="caption">
+                            <a href="/artwork/{{ a.slug }}">{{ a.title }}</a>
+                            <strong><p style="color:black">{{ a.artist }}</p></strong>
+                        </div>
                     </div>
                     </li>  
                 {% endif %}
@@ -340,7 +370,6 @@ ul li img {
             </ul>
         </div>
         </br>
-        </br>            
         
         <div class="container-fluid offset1">        
         <div id="33"></div>
@@ -348,24 +377,26 @@ ul li img {
                 </br>
                 </br>
                 </br>
-                <h5>Vol.3 No.3 (August, 1978) <a href="https://github.com/downloads/matthewepler/ReCode_Project/COMPUTER_GRAPHICS_AND_ART_Aug1978.pdf">[PDF]</a> <a href="https://github.com/matthewepler/ReCode_Project/tree/master/Computer_Graphics_and_Art/v3n3"> [repo]</a></h5>
+                <h5>Vol.3 No.3 (August, 1978) <a href="https://github.com/downloads/matthewepler/ReCode_Project/COMPUTER_GRAPHICS_AND_ART_Aug1978.pdf">[PDF]</a></h5>
             </div>
 
             <ul class="thumbnails">
             {% for a in artworks %}
                 {% if a.source_detail == "v3n3" %}                       
-                    <li class="span4">
+                    <li>
                     <div class="thumbnail">
-                    <a href="/artwork/{{ a.slug }}"><img src={{ a.photo_link }}><p>{{ a.artist }}</p>
-                    </a>
+                        <a href="/artwork/{{ a.slug }}"><img src={{ a.photo_link }}></a>
+                        <div class="caption">
+                            <a href="/artwork/{{ a.slug }}">{{ a.title }}</a>
+                            <strong><p style="color:black">{{ a.artist }}</p></strong>
+                        </div>
                     </div>
-                    </li>  
+                    </li>   
                 {% endif %}
             {% endfor %}  
             </ul>
         </div>
         </br>
-        </br>   
         
         <div class="container-fluid offset1">            
         <div id="34"></div>
@@ -373,15 +404,18 @@ ul li img {
                     </br>
                     </br>
                     </br>
-                    <h5>Vol.3 No.4 (November, 1978)<a href="https://github.com/downloads/matthewepler/ReCode_Project/COMPUTER_GRAPHICS_AND_ART_Nov1978.pdf">[PDF]<a/><a href="https://github.com/matthewepler/ReCode_Project/tree/master/Computer_Graphics_and_Art/v3n4"> [repo]</a></h5>
+                    <h5>Vol.3 No.4 (November, 1978)<a href="https://github.com/downloads/matthewepler/ReCode_Project/COMPUTER_GRAPHICS_AND_ART_Nov1978.pdf">[PDF]<a/></h5>
             </div>
             <ul class="thumbnails">
             {% for a in artworks %}
                 {% if a.source_detail == "v3n4" %}                       
-                    <li class="span4">
+                    <li>
                     <div class="thumbnail">
-                    <a href="/artwork/{{ a.slug }}"><img src={{ a.photo_link }}><p>{{ a.artist }}</p>
-                    </a>
+                        <a href="/artwork/{{ a.slug }}"><img src={{ a.photo_link }}></a>
+                        <div class="caption">
+                            <a href="/artwork/{{ a.slug }}">{{ a.title }}</a>
+                            <strong><p style="color:black">{{ a.artist }}</p></strong>
+                        </div>
                     </div>
                     </li>  
                 {% endif %}

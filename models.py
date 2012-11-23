@@ -12,7 +12,7 @@ class Translation( Document ):
 	artwork_slug = StringField()
 	file_links = ListField( StringField() )
 	code = StringField()
-	photo = StringField()
+	photo_link = StringField()
 	description = StringField()
 	video = StringField()
 

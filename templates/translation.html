@@ -10,6 +10,7 @@
 			<h3>{{ translation.artist }}</h3>
 		</br>
 			<p><strong>Based on: </strong><a href="/artwork/{{ orig.slug }}">{{ orig.title }}</a> by {{ orig.artist }}, {{ orig.date }}</p>
+			<p>Category: {{ translation.category }}</p>
 			</br>
 			<p><strong>Description: </p></strong>
 			<p>{{translation.description}}</p>
@@ -18,10 +19,10 @@
 			
 
 		
-		{% if translation.photo|length > 20 %}
-		<img src={{ translation.photo }} style="align:center">
-		{% elif translation.video|length > 5 %}
-		{{ translation.video|safe }}
+		{% if translation.video|length > 5 %}
+			{{ translation.video|safe }}
+		{% else  %}
+			<img src={{ translation.photo_link }} style="align:center">
 		{% endif %}
 		</div>
 	</div>

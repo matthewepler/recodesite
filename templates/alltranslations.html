@@ -1,6 +1,5 @@
 {% extends "/layout.html" %}
 
-
 {% block styles %}
 <style>
 img  {
@@ -37,36 +36,27 @@ h5 {
 </style>
 {% endblock %}
 
-{% block body %}
+{% block body %} 
 
-<div class="row-fluid offset1" style="margin-top:100px">
+<div class="row-fluid offset1">
+    <h3>Translations</h3> 
+    <hr>
         <ul class="thumbnails">
-            {% if artworks|length > 0 %}
-                {% for a in artworks %}   
-                    <li>
-                        <div class="thumbnail">
-                            <a href="/artwork/{{ a.slug }}"><img src={{ a.photo_link }}>
-                            <div class="caption">
-                                "{{ a.title }}"</a>
-                                <p style="color:black">{{ a.artist }}</p>
-                            </div>
-                        </div>
-                    </li>
-                {% endfor %}  
-            {% endif %}
             {% if translations|length > 0 %}
                 {% for t in translations %}   
                     <li>
                         <div class="thumbnail">
                             <a href="/translation/{{ t.slug }}"><img src={{ t.photo_link }}>
-                            <div class="caption">
+                            <div class="caption" style="margin-left: 35px;margin-top:-15px;">
                                 "{{ t.title }}"</a>
                                 <p style="color:black">{{ t.artist }}</p>
+                                <p style="color:black">({{t.category}})</p>
                             </div>
                         </div>
                     </li>
                 {% endfor %}  
             {% endif %}
+        </ul>
 </div>
 </br>
 </br>
