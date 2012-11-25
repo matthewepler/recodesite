@@ -41,7 +41,7 @@ def submit( artwork_slug ):
 		translation.title = request.form.get('title', 'untitled')
 		translation.artist = request.form.get('artist')
 		translation.category = request.form.get('category')
-		translation.photo = "/static/img/trans/" + request.form.get('photo')
+		translation.photo_link = "/static/img/trans/" + request.form.get('photo')
 		translation.description = request.form.get('description', 'None')
 		translation.code = request.form.get('code')
 		translation.video = Markup( request.form.get('video') )
