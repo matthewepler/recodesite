@@ -1,5 +1,20 @@
 {% extends "/layout.html" %}
 
+{% block styles %}
+
+<style type="text/css">
+
+label {
+	text-decoration:underline;
+	font-size: 12pt;
+	font-weight: thick;
+}
+
+</style>
+
+{% endblock %}
+
+
 
 {% block body %}
 
@@ -28,8 +43,8 @@
 			{{ orig.description }}
 			</br>
 			</br>
-			<a href={{ orig.code_link }} target="_blank"> GitHub repository </a>	
-		</div>
+<!-- 			<a href={{ orig.code_link }} target="_blank"> GitHub repository </a>	
+ -->		</div>
 	</div>
 </div>
 </br>
@@ -38,26 +53,38 @@
 </div>
 <hr>
 
-<div class="row-fluid offset1" style="margin-top:25px">
-	<form class=".form-horizontal" id="submission" action="/submit/{{orig.slug}}" method='POST'>
+<div class="row-fluid offset6" style="margin-top:25px">
+	<form class=".form-horizontal" id="submission" action="/submit/{{orig.slug}}" method='POST' enctype="multipart/form-data">
 		
 		<div class="span4">
 			<!-- Artist -->
 			<div class-"control-group">
-				<label class="control-label" for="artist">Name</label>
+				<label class="control-label" for="artist">Your Name</label>
 				<div class="controls">
 					<input class="input-block-level" type="text" id="artist" name="artist" placeholder="First Last">
 				</div>
 			</div>
 			</br>
+			
+			<!-- Artist URL -->
+			<div class-"control-group">
+				<label class="control-label" for="artist-url">Your URL</label>
+				<em class="help-block">(optional)</em>
+				<div class="controls">
+					<input class="input-block-level" type="text" id="artist-url" name="artist-url" placeholder="http://yoursite.com">
+				</div>
+			</div>
+			</br>
+
 			<!-- Title -->
 			<div class-"control-group">
-				<label class="control-label" for="title">Title</label>
+				<label class="control-label" for="title">Sketch Title</label>
 				<div class="controls">
 					<input class="input-block-level" type="text" id="title" name="title" placeholder:"untitled">
 				</div>
 			</div>
 			</br>
+
 			<!-- Category -->
 			<div class-"control-group">
 				<label class="control-label" for="category">Category</label>
@@ -69,48 +96,64 @@
 				</div>
 			</div>
 			</br>
+
 			<!-- Photo link -->
 			<div class-"control-group">
-				<label class="control-label" for="photo">Photo Link</label>
+				<label class="control-label" for="photo-upload">Image/Screengrab</label>
+				<em class="help-block">(jpg, png or gif)</em>
 				<div class="controls">
-					<input class="input-block-level" type="text" id="photo" name="photo">
+					<input type="file" id="photo-upload" name="photo-upload">
 				</div>
 			</div>
 			</br>
+
+			<!-- pde link -->
+			<div class="control-group">
+				<label class="control-label" for="file-upload">Sketch File</label>
+				<em class="help-block">All code/classes should be in a single .pde file. We will add your name, the date, and the ReCode Project header.</em>
+				<div class="controls">
+					<input type="file" id="file-upload" name="file-upload">
+				</div>
+			</div>
+			</br>
+
+			<!-- JS checkbox -->
+			<div class="control-group">
+				<label class="checkbox" for="js">Run in Browser
+				<input type="checkbox" id="js" name="js" value="True">
+				</label>
+				<em class="help-block">Check this if your code can be run as Processing.js. Note: Do not check this box if you are using any external libraries in your code.</em>
+			</div>
+			</br>
+
 			<!-- Video link -->
-			<div class-"control-group">
-				<label class="control-label" for="video">Video Embed Link</label>
+<!-- 			<div class-"control-group">
+				<label class="control-label" for="file_upload">Video Embed Link</label>
+				<em class="help-block"> (optional)</em>
 				<div class="controls">
 					<input class="input-block-level" type="text" id="video" name="video">
 				</div>
 			</div>
-			</br>
+			</br> -->
+
 			<!-- Description -->
 			<div class-"control-group">
 				<label class="control-label" for="description">Description</label>
+				<em class="help-block">(optional)</em>
 				<div class="controls">
 					<textarea class="input-block-level" cols="6" rows="12" id="description" name="description"></textarea>
 				</div>
 			</div>
 			</br>
 			</br>
-			<!-- Submit -->
+
+			<!-- Submit/Cancel -->
 			<div>
- 				 <input type="submit" class="btn btn-primary">
- 				 <em><span class="help-block"></span></em>
+ 				 <input type="submit" class="btn btn-success">
+ 				 <a href="/artwork/{{orig.slug}}" class="btn btn-danger">Cancel</a>
 			</div>
 		</div>
 
-		<div class="span6">
-			<!-- Code -->
-			<div class-"control-group">
-				<label class="control-label" for="code">Paste Code >></label>
-				<em><span class="help-block">(All code in one document. Move classes, etc. below your void/draw functions)</span></em>
-				<div class="controls">
-					<textarea class="input-block-level" rows="42" cols="20" id="code" name="code"></textarea>
-				</div>
-			</div>
-		</div>
 	</form>
 </div>
 		

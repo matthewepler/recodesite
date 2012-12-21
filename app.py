@@ -1,17 +1,25 @@
-import os, json, requests
-import re
+import os, datetime, re
 from unidecode import unidecode
+from werkzeug import secure_filename
 
-from flask import Flask, jsonify, request, render_template, redirect, abort, Markup
+from flask import Flask, request, render_template, redirect, Markup
 from flask.ext.mongoengine import mongoengine
 
 import models
+import boto
+import StringIO
 
 mongoengine.connect( 'mydata', host=os.environ.get('MONGOLAB_URI') )
-AUTH_STR = os.environ.get('AUTH_STR')
 
 app = Flask(__name__)   
 app.config['CSRF_ENABLED'] = False
+app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
+app.secret_key = os.environ.get('SECRET_KEY')
+
+AUTH_STR = os.environ.get('AUTH_STR')
+ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif', 'pde', 'js'])
+
+
 
 
 # ----------------------------------------------------------------- HOME >>>
@@ -32,19 +40,61 @@ def index():
 def submit( artwork_slug ):
 	
 	orig = models.Artwork.objects.get( slug = artwork_slug )
-	submit_form = models.TranslationForm(request.form)
+	submit_form = models.upload_form(request.form)
 
 	if request.method == "POST":
-	
+		
 		translation = models.Translation()
 
 		translation.title = request.form.get('title', 'untitled')
 		translation.artist = request.form.get('artist')
+		translation.artist_url = request.form.get('artist-url')
 		translation.category = request.form.get('category')
-		translation.photo_link = "/static/img/trans/" + request.form.get('photo')
 		translation.description = request.form.get('description', 'None')
-		translation.code = request.form.get('code')
 		translation.video = Markup( request.form.get('video') )
+
+		# IMAGE FILE
+		photo_upload = request.files['photo-upload']
+		if photo_upload and allowed_file(photo_upload.filename):
+			now = datetime.datetime.now()
+			filename = "p" + now.strftime('%Y%m%d%H%M%s') + secure_filename(photo_upload.filename)
+			s3conn = boto.connect_s3(os.environ.get('AWS_ACCESS_KEY_ID'),os.environ.get('AWS_SECRET_ACCESS_KEY'))
+			b = s3conn.get_bucket(os.environ.get('AWS_BUCKET')) # bucket name defined in .env
+			k = b.new_key(b)
+			k.key = filename
+			k.set_metadata("Content-Type", photo_upload.mimetype)
+			k.set_contents_from_string(photo_upload.stream.read())
+			k.make_public()
+
+			if k and k.size > 0:		
+				translation.photo_link = filename
+
+		else:
+			return "uhoh there was an error " + photo_upload.filename
+
+		# PDE FILE
+		file_upload = request.files['file-upload']
+		if file_upload and allowed_file(file_upload.filename):
+			now = datetime.datetime.now()
+			filename = now.strftime('%Y%m%d%H%M%s') + "-" + secure_filename(file_upload.filename)
+			s3conn = boto.connect_s3(os.environ.get('AWS_ACCESS_KEY_ID'),os.environ.get('AWS_SECRET_ACCESS_KEY'))
+			b = s3conn.get_bucket(os.environ.get('AWS_BUCKET')) # bucket name defined in .env
+			k = b.new_key(b)
+			k.key = filename
+			k.set_metadata("Content-Type", file_upload.mimetype)
+			k.set_contents_from_string(file_upload.stream.read())
+			k.make_public()
+
+			if k and k.size > 0:		
+				translation.pde_link = filename
+
+		else:
+			return "uhoh there was an error " + file_upload.filename
+
+		# JS Boolean
+		if request.form.get('js') == "True":
+			translation.js = True
+
 		translation.artwork_slug = orig.slug
 		translation.slug = slugify( translation.artist + "-" + translation.category + "-" + orig.title + "-" + orig.artist )
 		translation.save()
@@ -60,8 +110,13 @@ def submit( artwork_slug ):
 		return redirect("/translation/%s" % translation.slug)
 		
 	else:
+
+		templateData = {
+			'form' : submit_form,
+			'orig' : orig
+		}
 		
-		return render_template("submit.html", orig=orig)
+		return render_template("submit.html", **templateData)
 
 
 # ---------------------------------------------------------------- ARTWORK >>>
@@ -268,8 +323,11 @@ def test():
 def page_not_found(error):
     return render_template('404.html'), 404
 
+def allowed_file(filename):
+    return '.' in filename and \
+           filename.lower().rsplit('.', 1)[1] in ALLOWED_EXTENSIONS
 
-# Slugify the title to create URLS
+
 # via http://flask.pocoo.org/snippets/5/
 _punct_re = re.compile(r'[\t !"#$%&\'()*\-/<=>?@\[\\\]^_`{|},.]+')
 def slugify(text, delim=u'-'):
@@ -283,7 +341,7 @@ def slugify(text, delim=u'-'):
 
 #--------------------------------------------------------- SERVER START-UP >>>
 if __name__ == "__main__":
-	app.debug = False
+	app.debug = True
 	
 	port = int(os.environ.get('PORT', 5000)) # locally PORT 5000, Heroku will assign its own port
 	app.run(host='0.0.0.0', port=port)

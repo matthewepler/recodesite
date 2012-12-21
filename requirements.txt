@@ -3,3 +3,4 @@ Mongoengine==0.7.5
 unidecode
 Flask-mongoengine
 requests==0.14.1
+boto
