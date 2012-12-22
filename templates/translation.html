@@ -2,7 +2,8 @@
 
 
 {% block body %}
-<script src="processing-1.4.1.min.js"></script>
+
+<script type="text/javascript" src="/static/js/processing-1.4.1.min.js"></script>
 
 <div class="container">
 	<div class="row-fluid">
@@ -19,25 +20,24 @@
 			</br>
 			
 			{% if translation.js == True %}	
-				<canvas id="sketch" height="500px" data-processing-sources="https://s3.amazonaws.com/recode-files/{{ translation.pde_link }}" style="border:1px solid black; image-rendering: -webkit-optimize-contrast !important;""></canvas>
+				<canvas id="Pretty Little Dots" data-processing-sources="/static/sketches/{{ translation.pde_link }}" style="border:1px solid black; image-rendering: -webkit-optimize-contrast !important;"></canvas>
 				</br>
 				</br>
-				<a href="https://s3.amazonaws.com/recode-files/{{ translation.pde_link }}">Download Code</a>
+				<pre>{{ translation.code }}</pre>
 			{% elif translation.video|length > 5 %} <!-- for first round of translations -->
 				{{ translation.video|safe }}
 				</br>
 				</br>
-				<a href="https://s3.amazonaws.com/recode-files/{{ translation.pde_link }}">Download Code</a>
+				<pre>{{ translation.code }}</pre>
 			{% else  %}
 				<img src={{ translation.photo_link }} style="align:center">
 				</br>
 				</br>
-				<a href="https://s3.amazonaws.com/recode-files/{{ translation.pde_link }}">Download Code</a>
+				<pre>{{ translation.code }}</pre>
 			{% endif %}
 		</div>
 	</div>
 	</br>
 </div>
-
 
 {% endblock %}

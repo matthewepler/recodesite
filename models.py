@@ -21,7 +21,7 @@ class Translation( mongoengine.Document ):
 	height = mongoengine.StringField()
 	timestamp = mongoengine.DateTimeField(default=datetime.now())
 	video = mongoengine.StringField()	# depreciated 12/21/12
-	code = mongoengine.StringField()	# depreciated 12/21/12
+	code = mongoengine.StringField()	
 
 class Artwork( mongoengine.Document ):
 	title = mongoengine.StringField()

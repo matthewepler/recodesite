@@ -77,16 +77,12 @@ def submit( artwork_slug ):
 		if file_upload and allowed_file(file_upload.filename):
 			now = datetime.datetime.now()
 			filename = now.strftime('%Y%m%d%H%M%s') + "-" + secure_filename(file_upload.filename)
-			s3conn = boto.connect_s3(os.environ.get('AWS_ACCESS_KEY_ID'),os.environ.get('AWS_SECRET_ACCESS_KEY'))
-			b = s3conn.get_bucket(os.environ.get('AWS_BUCKET')) # bucket name defined in .env
-			k = b.new_key(b)
-			k.key = filename
-			k.set_metadata("Content-Type", file_upload.mimetype)
-			k.set_contents_from_string(file_upload.stream.read())
-			k.make_public()
-
-			if k and k.size > 0:		
-				translation.pde_link = filename
+			f = open( "./static/sketches/" + filename, 'w+' )
+			f.write( file_upload.read() )
+			file_upload.seek(0)
+			translation.code = "/* \nPart of the ReCode Project (http://recodeproject.com)\n" + "Based on \"" + orig.title + "\" by " + orig.artist + "\n" + "Originally published in \"" + orig.source + "\" " + orig.source_detail + ", " + orig.date + "\nCopyright (c) " + now.strftime('%Y') + " " + translation.artist + " - " + "OSI/MIT license (http://recodeproject/license).\n*/\n\n" + file_upload.read()
+			f.close()
+			translation.pde_link = filename
 
 		else:
 			return "uhoh there was an error " + file_upload.filename
@@ -97,6 +93,7 @@ def submit( artwork_slug ):
 
 		translation.artwork_slug = orig.slug
 		translation.slug = slugify( translation.artist + "-" + translation.category + "-" + orig.title + "-" + orig.artist )
+		
 		translation.save()
 
 		orig.hasTranslation = "yes"
@@ -297,7 +294,11 @@ def search():
 		error_str = "No results were returned. If you think this is an error, please send us an email using the mail icon at the top-right of your screen."
 		return render_template("searchresults.html", error_str=error_str)
 
+@app.route("/license")
+def license():
 
+
+	return render_template("license.html")
 
 # ---------------------------------------------------------------- TEST >>>
 @app.route("/test")

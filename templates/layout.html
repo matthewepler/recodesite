@@ -1,12 +1,8 @@
 <!DOCTYPE html>
-<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!--> <!-- <html class="no-js">  --><!--<![endif]-->
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-        <title></title>
+        <title>ReCode Project</title>
         <meta name="description" content="archive of computer art translated into processing and hosted on github">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link href="assets/css/bootstrap-responsive.css" rel="stylesheet">
@@ -14,14 +10,11 @@
         <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
         <link rel="shortcut icon" href="/favicon.ico" />
 
-        <!-- Get Font from Google http://www.google.com/webfonts -->
         <link href='http://fonts.googleapis.com/css?family=Oxygen+Mono' rel='stylesheet' type='text/css'>
-        <script type="text/javascript" src="static/js/processing.js" target="mysketch"></script>
-
            
         {% block styles %}{% endblock %}
-
     </head>
+    
     <body>
         <div class="navbar navbar-inverse navbar-fixed-top">
             <div class="navbar-inner">
@@ -31,21 +24,23 @@
                     </a>
                     <div class="pull-right">
                         <form class="navbar-search" action="/search" method="post">
-                            <div class="input-append" style="margin-top:3px">
+                            <div class="input-append" >
                                 <input class="search-query input-small" name="keyword" type="text" placeholder="" style="text-align:right">
                             </div>
                         </form> 
                         <a href="https://twitter.com/ReCodeProject" target="_blank">
-                            <img src="/static/img/twitter_dark.png" width="25" height="25" style="margin-top:7px">
+                            <img src="/static/img/twitter_dark.png" width="25" height="25" style="margin-top:10px;margin-left:10px">
                         </a>
                         <a href="https://github.com/matthewepler/ReCode_Project" target="_blank">
-                            <img src="/static/img/github_dark.png" width="20" height="20" style="margin-top:5px">
+                            <img src="/static/img/github_dark.png" width="20" height="20" style="margin-top:10px">
                         </a>
                         <a href="mailto:info@recodeproject.com" target="_blank">
-                            <img src="/static/img/mail_dark.png" style="margin-top:5px">
+                            <img src="/static/img/mail_dark.png" style="margin-top:10px">
+                        </a>
+                        <a href="http://recodeproject.com/license" target="_blank">
+                            <img src="/static/img/copyright.png" width="20" height="20" style="margin-top:10px">
                         </a>
                     </div>
-                    
                 </div>
             </div>
         </div>
@@ -56,7 +51,7 @@
         <footer align="center">
             </br>
             <p>
-                All works created for the ReCode Project are covered under the Creative Commons <a href="http://creativecommons.org/licenses/by-sa/3.0/" traget="_blank">Attribution-ShareAlike 3.0</a> license. </a>
+                All works created for the ReCode Project are covered under the <a href="http://opensource.org/licenses/MIT" target="_blank">OSI/MIT license</a>.
             </p>
             <p><a href="mailto:info@recodeproject.com">info@recodeproject.com</a></p>
         </footer>
