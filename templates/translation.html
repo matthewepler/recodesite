@@ -20,7 +20,7 @@
 			</br>
 			
 			{% if translation.js == True %}	
-				<canvas id="Pretty Little Dots" data-processing-sources="/static/sketches/{{ translation.pde_link }}" style="border:1px solid black; image-rendering: -webkit-optimize-contrast !important;"></canvas>
+				<canvas id="{{ translation.title }}" data-processing-sources="/static/sketches/{{ translation.pde_link }}" style="border:1px solid black; image-rendering: -webkit-optimize-contrast !important;"></canvas>
 				</br>
 				</br>
 				<pre>{{ translation.code }}</pre>

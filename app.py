@@ -67,7 +67,7 @@ def submit( artwork_slug ):
 			k.make_public()
 
 			if k and k.size > 0:		
-				translation.photo_link = filename
+				translation.photo_link = "https://s3.amazonaws.com/recode-files/" + filename
 
 		else:
 			return "uhoh there was an error " + photo_upload.filename
@@ -88,12 +88,14 @@ def submit( artwork_slug ):
 			return "uhoh there was an error " + file_upload.filename
 
 		# JS Boolean
+		browser_note = "This sketch does not run in the browser."
 		if request.form.get('js') == "True":
 			translation.js = True
+			browser_note = "This sketch is running in the browser, but cannot be edited here."
 
 		translation.artwork_slug = orig.slug
 		translation.slug = slugify( translation.artist + "-" + translation.category + "-" + orig.title + "-" + orig.artist )
-		
+		translation.description = translation.description + " " + browser_note
 		translation.save()
 
 		orig.hasTranslation = "yes"
@@ -162,7 +164,7 @@ def alltranslations():
 
 	translations = []
 
-	allTranslations = models.Translation.objects()
+	allTranslations = models.Translation.objects.order_by('-timestamp')
 	for t in allTranslations:
 		translations.append( t )
 
