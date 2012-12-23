@@ -1,12 +1,3 @@
-// This sketch is part of the ReCode Project - http://recodeproject.com
-// From Computer Graphics and Art vol2 no3 pg 28
-// Segrid
-// by John Roy
-// 
-// Quin Kennedy
-// 2012
-// Creative Commons license CC BY-SA 3.0
-
 //Since there are 
 //8 sets of images plus a center empty image plus a 1/2 width of black border
 //this gives a canvas size of 8*2+1+.5*2 = 9*2 = 18 cells

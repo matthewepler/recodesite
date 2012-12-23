@@ -1,17 +1,3 @@
-/**
- * This sketch is part of the ReCode Project - http://recodeproject.com
- * From Computer Graphics and Art vol1 no2
- * 
- * "Structure"
- * by Zdenek Sykora 1976
- *
- * experimental recode by Krystof Pesek 2012
- * released under Creative Commons Attribution-ShareAlike 3.0 license
- *
- */
-
-/////////////////////////////////
-
 float theta[];
 PGraphics plny;
 int [] moznosti = {0,90,180,270};

@@ -1,12 +1,3 @@
-  // This sketch is part of the ReCode Project - http://recodeproject.com
-  // From Computer Graphics and Art vol2 no3 pg 10
-  // by William Kolomyjec
-  // "Boxes"
-  // 
-  // Sermad Buni
-  // 2012
-  // Creative Commons license CC BY-SA 3.0
-
 void setup() {
     
     int canvaswidth = 17;

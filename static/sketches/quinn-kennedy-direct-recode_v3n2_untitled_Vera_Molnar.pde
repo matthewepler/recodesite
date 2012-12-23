@@ -1,13 +1,3 @@
-// This sketch is part of the ReCode Project - http://recodeproject.com
-// From Computer Graphics and Art vol3 no2 pg 31
-// Untitled (from the "196 Trapeziums Series")
-// by Vera Molnar
-// 
-// 
-// Quin Kennedy
-// 2012
-// Creative Commons license CC BY-SA 3.0
-
 static final int numTiles = 14;
 static final float gutterRelativeSize = 0;
 static final int windowSize = 400;

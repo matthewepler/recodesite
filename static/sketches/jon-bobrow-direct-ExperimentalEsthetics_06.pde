@@ -1,19 +1,3 @@
-// This sketch is part of the ReCode Project - http://recodeproject.com
-// From Computer Graphics and Art vol3 no2 pg 22
-// by Reiner Schneeberger
-// 
-// Untitled #5 is part of a 10 piece series, intended to test viewers
-// perception of art and composition. The section is titled "Experimental
-// Esthetics with Computer Graphics -- Analyses of Viewers Impressions 
-// of Computer Graphics."
-// 
-// Jonathan Bobrow
-// 2012
-// Creative Commons license CC BY-SA 3.0
-//
-// note: .f enforces float division, dividing by an int would automatically round down
-// i.e. 1/2 = 0 , 1/2.f = .5
-
 int gridSize = 30;
 int density = 7;
 

@@ -1,12 +1,3 @@
-// This sketch is part of the ReCode Project - http://recodeproject.com
-// From Computer Graphics and Art vol3 no4 Back Cover
-// by William Kolomyjec
-// "Hex Variations"
-// 
-// Steve Berrick
-// 2012
-// Creative Commons license CC BY-SA 3.0
-
 int _width = 600;
 int _height = 900;
 int _size = 20;     // hexagon radius

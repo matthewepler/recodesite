@@ -1,11 +1,3 @@
-// This sketch is part of the ReCode Project - http://recodeproject.com
-// From Computer Graphics and Art vol1 no3 pg 25
-// by Roger Coqart
-// 
-// Nick Santaniello
-// 2012
-// Creative Commons license CC BY-SA 3.0
-
 int margin = 8;
 int boxSize = 30;
 int cols = 15;

@@ -1,11 +1,3 @@
-// This sketch is part of the ReCode Project - http://recodeproject.com
-// From Computer Graphics and Art vol3 no2 pg 30
-// by Roger Coqart
-// 
-// Quin Kennedy
-// 2012
-// Creative Commons license CC BY-SA 3.0
-
 LineData[] tileData;
 //number selection inspired by version in PDF, not screenshot on website.
 static final int numTiles = 13;

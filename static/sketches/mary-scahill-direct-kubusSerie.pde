@@ -1,13 +1,3 @@
-// This sketch is part of the ReCode Project - http://recodeproject.com
-// From Computer Graphics and Art vol1 no2 pg 27, 1976
-// by Klaus Basset
-// "Kubus-Serie"
-// 
-// Mary Scahill
-// 2012
-// Creative Commons license CC BY-SA 3.0     
-
-
 // these values refer to the overal height of each row and column of the grid
 int rowHeight = 9;
 int colWidth = 7;

@@ -1,13 +1,3 @@
-// This sketch is part of the ReCode Project - http://recodeproject.com
-// From Computer Graphics and Art vol3 no2 pg 16
-// by Aaron Marcus
-// "Untitled photoprint", 15" x 19"
-// Other works in the Hieroglyphs series are "Noise Barrier", and various "Untitled" works.
-// 
-// Genevieve Hoffman
-// 2012
-// Creative Commons license CC BY-SA 3.0
-
 void setup() {
   size(800,800);
   background(0);

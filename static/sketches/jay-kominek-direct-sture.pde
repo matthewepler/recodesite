@@ -1,11 +1,3 @@
-// This sketch is part of the ReCode Project - http://recodeproject.com
-// From Computer Graphics and Art vol 1, no 2 pg 26, 1976
-// by Sture Johannesson and Sten Kallin, Malmo, Sweden
-// "Topographic Form"
-// 
-// Jay Kominek (kominek@gmail.com)
-// 2012
-// Creative Commons license CC BY-SA 3.0   
 void setup()
 {
   arcs = new RaisedArc[4];
