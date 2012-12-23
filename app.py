@@ -204,6 +204,11 @@ def translationslist():
 		for t in allTranslations:
 			if t.category == "experimental":
 				translations.append( t )
+	elif filter_str == "js":
+		allTranslations = models.Translation.objects()
+		for t in allTranslations:
+			if t.js == True:
+				translations.append( t )
 	else:
 		filtered_list = sorted(allArtworks, key=lambda k: k[filter_str]) 
 
