@@ -28,6 +28,7 @@ crossRect(0,0,91,117);//draws crosses(or plus signs) on top of white rectangles
 parallelDashEllipse(91,0,49,126);//draws dashes within ellipses in parallelogram
 parallelCrossEllipse(7,117,84,63);//draws crosses within ellipses in parallelogram
   }
+  noLoop();
 }
 
 //funstion for drawing cross
