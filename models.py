@@ -7,18 +7,17 @@ from datetime import datetime
 
 
 class Translation( mongoengine.Document ):
-	title = mongoengine.StringField()
+	title = mongoengine.StringField(required=True)
 	artist = mongoengine.StringField(required=True)
 	artist_url = mongoengine.StringField()
+	artist_email = mongoengine.StringField(required=True)
 	category = mongoengine.StringField(required=True)
 	slug = mongoengine.StringField()
 	artwork_slug = mongoengine.StringField()
-	photo_link = mongoengine.StringField()
-	pde_link = mongoengine.StringField()
+	photo_link = mongoengine.StringField(required=True)
+	pde_link = mongoengine.StringField(required=True)
 	js = mongoengine.BooleanField()
 	description = mongoengine.StringField()
-	width = mongoengine.StringField()
-	height = mongoengine.StringField()
 	timestamp = mongoengine.DateTimeField(default=datetime.now())
 	video = mongoengine.StringField()	# depreciated 12/21/12
 	code = mongoengine.StringField()	

@@ -46,10 +46,17 @@ def submit( artwork_slug ):
 		
 		translation = models.Translation()
 
-		translation.title = request.form.get('title', 'untitled')
-		translation.artist = request.form.get('artist')
+		translation.title = request.form.get('title') 				# required
+		if translation.title == "":
+			return "Please give your translation a title."
+		translation.artist = request.form.get('artist')				# required
+		if translation.artist == "":
+			return "Please include your name."
+		translation.artist_email = request.form.get('artist-email')	# required
+		if translation.artist_email == "":
+			return "Please include your email."
+		translation.category = request.form.get('category')			# required, will default to 'direct'
 		translation.artist_url = request.form.get('artist-url')
-		translation.category = request.form.get('category')
 		translation.description = request.form.get('description', 'None')
 		translation.video = Markup( request.form.get('video') )
 
