@@ -1,11 +1,12 @@
 PGraphics pg;
 
 void setup() {
-  size( 416, 500, OPENGL );
+  size( 416, 500 );
   fill( 0 );
   noStroke();
-  pg = createGraphics( 416, 500, OPENGL );
+  pg = createGraphics( 416, 500, P2D );
   
+  rotate(-0.01);
   drawSquares();
 }
 
@@ -29,11 +30,11 @@ void drawSquares() {
       }
     }
   pg.endDraw();
-  rotate(-0.01);
-  translate( -8, 0, 0 );
+
   image(pg, 0, 0);
 }
 
 void mousePressed() {
+  rotate(-0.01);
   drawSquares();
 }
