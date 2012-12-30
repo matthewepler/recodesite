@@ -58,6 +58,7 @@ def submit( artwork_slug ):
 		translation.category = request.form.get('category')			# required, will default to 'direct'
 		translation.artist_url = request.form.get('artist-url')
 		translation.description = request.form.get('description', 'None')
+		descriptionList = translation.description.split("\r\n")
 		translation.video = Markup( request.form.get('video') )
 
 		# IMAGE FILE
@@ -111,6 +112,7 @@ def submit( artwork_slug ):
 		templateData = {
 			'translation' : translation,
 			'orig' : orig,
+			'descriptionList' : descriptionList
 		}
 
 		return redirect("/translation/%s" % translation.slug)
@@ -156,10 +158,12 @@ def translation(trans_slug):
 
 	translation = models.Translation.objects.get( slug=trans_slug )
 	orig = models.Artwork.objects.get( slug=translation.artwork_slug )
+	descriptionList = translation.description.split("\r\n")
 
 	templateData = {
 		'translation' : translation,
 		'orig' : orig,
+		'descriptionList': descriptionList
 	}
 
 	return render_template("translation.html", **templateData)
