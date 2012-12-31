@@ -102,7 +102,7 @@ def submit( artwork_slug ):
 			browser_note = "This sketch is running in the browser, but cannot be edited here."
 
 		translation.artwork_slug = orig.slug
-		translation.slug = slugify( translation.artist + "-" + translation.category + "-" + orig.title + "-" + orig.artist )
+		translation.slug = slugify( translation.artist + "-" + translation.title + "-" + translation.category + "-" + orig.title + "-" + orig.artist )
 		translation.description = translation.description + " " + browser_note
 		translation.save()
 
