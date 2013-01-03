@@ -215,13 +215,19 @@ def translationslist():
 		for t in allTranslations:
 			if t.category == "experimental":
 				translations.append( t )
+	elif filter_str == "artist":
+		artworks = sorted(allArtworks, key=lambda k: k[filter_str])
+	elif filter_str == "title":
+		artworks = sorted(allArtworks, key=lambda k: k[filter_str])
+	elif filter_str == "translator":
+		allTranslations = models.Translation.objects()
+		translations = sorted(allTranslations, key=lambda k: k["artist"])
 	elif filter_str == "js":
 		allTranslations = models.Translation.objects()
 		for t in allTranslations:
 			if t.js == True:
 				translations.append( t )
-	else:
-		filtered_list = sorted(allArtworks, key=lambda k: k[filter_str]) 
+
 
 	templateData = {
 		'artworks' : artworks,
