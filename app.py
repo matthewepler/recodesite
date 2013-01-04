@@ -93,7 +93,7 @@ def submit( artwork_slug ):
 			translation.pde_link = filename
 
 		else:
-			return "uhoh there was an error " + file_upload.filename
+			return "uhoh there was an error uploading " + file_upload.filename
 
 		# JS Boolean
 		browser_note = "This sketch does not run in the browser."
