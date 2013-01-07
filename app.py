@@ -334,11 +334,7 @@ def test():
 	for a in allArtworks:
 		name = a.artist
 		exists = True
-		for n in names:
-			if n == name:
-				exists = True
-			else:
-				exists = False
+		if names.includes( )
 		if exists == False:
 			names.append( name )
 			app.logger.debug( "* added: " + name )
@@ -380,7 +376,7 @@ def slugify(text, delim=u'-'):
 
 #--------------------------------------------------------- SERVER START-UP >>>
 if __name__ == "__main__":
-	app.debug = True
+	app.debug = False
 	
 	port = int(os.environ.get('PORT', 5000)) # locally PORT 5000, Heroku will assign its own port
 	app.run(host='0.0.0.0', port=port)
