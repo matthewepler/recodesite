@@ -1,15 +1,3 @@
-/*
-Part of the ReCode Project 
-http://recodeproject.com
-Untitled 1 (Computer graphics at the University of Munich - West Germany)
-by Various (Reiner Schneeberger and unnamed students)
-
-See also Vol. 2 No. 3 (image 10, pages 14-15) for more, including code. Input to computer on punch cards
-
-Nick Santaniello
-2012
-*/
-
 int cols = 11;
 int rows = 10;
 int frmRate =60;
@@ -19,7 +7,7 @@ int sizeDifference = 17;
 Nub[] nubs;
 
 void setup() {
-  size(1000, 950);
+  size(1000, 1000);
 
   rectMode(CENTER);
   strokeWeight(2);
@@ -73,12 +61,11 @@ void draw() {
 }
 
 void update() {
-  //saveFrame("nubs.jpg");
+  saveFrame("nubs.jpg");
   for (int i=0; i<110; i++) {
     nubs[i].update();
   }
 }
-
 class Nub {
 
   int cols = 11;

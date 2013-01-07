@@ -328,15 +328,29 @@ def license():
 @app.route("/test")
 def test():
 
-	allTranslations = models.Translation.objects()
+	names = []
 
-	for t in allTranslations:
-		artwork = models.Artwork.objects.get( slug=t.artwork_slug )
-		artwork.hasTranslation = "yes"
-		artwork.save()
-		app.logger.debug( artwork.hasTranslation )
+	allArtworks = models.Artwork.objects()
+	for a in allArtworks:
+		name = a.artist
+		exists = True
+		for n in names:
+			if n == name:
+				exists = True
+			else:
+				exists = False
+		if exists == False:
+			names.append( name )
+			app.logger.debug( "* added: " + name )
+		else:
+			app.logger.debug( "! duplicate: " + name )
 
-	return render_template("/test.html")
+	templateData = {
+		'names' : names
+	}
+				
+
+	return render_template("/test.html", **templateData)
 	# allTranslations = models.Translation.objects()
 	# for t in allTranslations:
 	# 	t.update( {$rename : {photo : photo_link }} )
@@ -366,7 +380,7 @@ def slugify(text, delim=u'-'):
 
 #--------------------------------------------------------- SERVER START-UP >>>
 if __name__ == "__main__":
-	app.debug = False
+	app.debug = True
 	
 	port = int(os.environ.get('PORT', 5000)) # locally PORT 5000, Heroku will assign its own port
 	app.run(host='0.0.0.0', port=port)
