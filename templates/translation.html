@@ -5,6 +5,7 @@
 
 <script type="text/javascript" src="/static/js/processing-1.4.1.min.js"></script>
 
+
 <div class="container">
 	<div class="row-fluid">
 		<div class="span10" style="margin-top:100px">
@@ -22,7 +23,8 @@
 			</br>
 			
 			{% if translation.js == True %}	
-				<canvas id="{{ translation.title }}" data-processing-sources="/static/sketches/{{ translation.pde_link }}" style="border:1px solid black; image-rendering: -webkit-optimize-contrast !important;"></canvas>
+				<script type="application/processing" target="sketch">{{translation.code|safe}}</script>
+				<canvas id="sketch" name="sketch" style="border:1px solid black; image-rendering: -webkit-optimize-contrast !important;"></canvas>
 				</br>
 				</br>
 				<pre>{{ translation.code }}</pre>
