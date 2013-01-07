@@ -334,7 +334,6 @@ def test():
 	for a in allArtworks:
 		name = a.artist
 		exists = True
-		if names.includes( )
 		if exists == False:
 			names.append( name )
 			app.logger.debug( "* added: " + name )
