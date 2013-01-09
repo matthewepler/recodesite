@@ -39,7 +39,7 @@
 
 <div id="sketch-block" class="row offset3" >
 	{% if translation.js == True %}	
-		<script type="application/processing" target="sketch">{{translation.code|safe}}</script>
+		<script id="script" type="application/processing" target="sketch">{{translation.code|safe}}</script>
 		<canvas id="sketch" name="sketch" style="border:1px solid black; image-rendering: -webkit-optimize-contrast	!important;"></canvas>
 	{% elif translation.video|length > 5 %} <!-- for first round of translations -->
 		{{ translation.video|safe }}
@@ -61,8 +61,11 @@
 		<button id="edit" class="btn pull-right" data-toggle="button">Edit In Browser</button>
 		<pre >{{ translation.code }}</pre>
 	</div>
-	<div id="new-code" class="">
-		<textarea id="new-code" rows="57" cols="50"></textarea>
+	<div id="new-code" class="span5">
+		<button id="run" class="btn"><img src="/static/img/play.png"></button>
+		<button id="pause" class="btn"><img src="/static/img/pause.png"></button>
+		<button id="reset" class="btn"><img src="/static/img/reset.png"></button>
+		<textarea id="code-area" rows="57" cols="50">{{translation.code|safe}}</textarea>
 	</div>
 </div>
 <br>
@@ -74,16 +77,30 @@
 {% block scripts %}
 
 <script type="text/javascript">
+
 $(document).ready(function(){
 	$('#new-code').hide();
 	$('#edit').click(function(){
 		$('#sketch').toggleClass('offset3');
 		$('#orig-code').toggleClass('span5 offset1');
-		$('#new-code').show();
-		$('#new-code').toggleClass('span5');
-		$('textarea').css('width', '510px')
+		$('#new-code').toggle();
+		$('textarea').css('width', '510px');
 	});
 });
+
+</script>
+
+
+<script type="text/javascript">
+
+$(document).ready(function(){
+	$('#run').click(function(id){
+		var $code = $('textarea').val();
+		$('#script').html($code);
+
+	});
+});
+
 </script>
 
 {% endblock %}
