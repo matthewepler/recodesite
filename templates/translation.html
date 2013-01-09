@@ -1,47 +1,79 @@
 {% extends "/layout.html" %}
 
+{% block styles %}
+
+<style type="text/css">
+
+.moveover {
+	margin-left:0px;
+}
+
+</style>
+
+{% endblock%}
 
 {% block body %}
 
 <script type="text/javascript" src="/static/js/processing-1.4.1.min.js"></script>
 
-
-<div class="container">
+<div class="row">
+<div id="basicinfo" class="span10 offset3" style="margin-top:100px">
 	<div class="row-fluid">
-		<div class="span10" style="margin-top:100px">
-			<h2>{{translation.title}}</h2>
-			<h3><a href="{{ translation.artist_url }}" target="_blank">{{ translation.artist }}</a></h3>
+		<h2>{{translation.title}}</h2>
+		<h3><a href="{{ translation.artist_url }}" target="_blank">{{ translation.artist }}</a></h3>
 		</br>
-			<p><strong>Based on: </strong><a href="/artwork/{{ orig.slug }}">{{ orig.title }}</a> by {{ orig.artist }}, {{ orig.date }}</p>
-			<p><strong>Category: </strong>{{ translation.category }}</p>
-			</br>
-			<p><strong>Description: </p></strong>
-			{% for line in descriptionList %}
-				<p>{{ line }}</p>
-			{% endfor %}
-			<hr style="margin:20px 0px 0px 0px">
-			</br>
-			
-			{% if translation.js == True %}	
-				<script type="application/processing" target="sketch">{{translation.code|safe}}</script>
-				<canvas id="sketch" name="sketch" style="border:1px solid black; image-rendering: -webkit-optimize-contrast !important;"></canvas>
-				</br>
-				</br>
-				<pre>{{ translation.code }}</pre>
-			{% elif translation.video|length > 5 %} <!-- for first round of translations -->
-				{{ translation.video|safe }}
-				</br>
-				</br>
-				<pre>{{ translation.code }}</pre>
-			{% else  %}
-				<img src={{ translation.photo_link }} style="align:center">
-				</br>
-				</br>
-				<pre>{{ translation.code }}</pre>
-			{% endif %}
-		</div>
+		<p><strong>Based on: </strong><a href="/artwork/{{ orig.slug }}">{{ orig.title }}</a> by {{ orig.artist }}, {{ orig.date }}</p>
+		<p><strong>Category: </strong>{{ translation.category }}
+		</p>
+		</br>
+		<p><strong>Description: </strong></p>
+		{% for line in descriptionList %}
+			<p>{{ line }}</p>
+		{% endfor %}
+		<hr style="margin:20px 0px 0px 0px">
+		</br>
+		</br>
 	</div>
-	</br>
 </div>
+</div>
+
+<div class="row">
+<div id="canvaswindow" class="span10 offset3">
+	{% if translation.js == True %}	
+		<script type="application/processing" target="sketch">{{translation.code|safe}}</script>
+		<canvas id="sketch" name="sketch" style="border:1px solid black; image-rendering: -webkit-optimize-contrast	!important;"></canvas>
+		<div id="orig-code" style="margin-top:40px">
+			<button id="edit" class="btn pull-right" data-toggle="button">Edit In Browser</button>
+			<pre>{{ translation.code }}</pre>
+		</div>
+	{% elif translation.video|length > 5 %} <!-- for first round of translations -->
+		{{ translation.video|safe }}
+		<div id="orig-code" style="margin-top:40px">
+			<pre>{{ translation.code }}</pre>
+		</div>
+	{% else  %}
+		<img src={{ translation.photo_link }} style="align:center">
+		<div id="orig-code" style="margin-top:40px">
+			<pre>{{ translation.code }}</pre>
+		</div>
+	{% endif %}
+</div>
+</div>
+</br>
+</br>
+
+{% endblock %}
+
+
+
+{% block scripts %}
+
+<script type="text/javascript">
+$(document).ready(function(){
+	$('#edit').click(function(){
+		$('#canvaswindow').toggleClass('offset1');
+	});
+});
+</script>
 
 {% endblock %}
