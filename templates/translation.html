@@ -81,9 +81,9 @@
 $(document).ready(function(){
 
 	var $originalcode = $('textarea').val();
-	var $processingInstance = Processing.getInstanceById('sketch');
 
 	$('#new-code').hide();
+
 	$('#edit').click(function(){
 		$('#sketch').toggleClass('offset3');
 		$('#orig-code').toggleClass('span5 offset1');
@@ -103,8 +103,10 @@ $(document).ready(function(){
 	});
 
 	$('#pause').toggle(function(){
+		var $processingInstance = Processing.getInstanceById('sketch');
 		$processingInstance.noLoop();
 	}, function() {
+		var $processingInstance = Processing.getInstanceById('sketch');
   		$processingInstance.loop();
 	});
 });
