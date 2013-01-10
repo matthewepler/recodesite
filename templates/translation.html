@@ -62,9 +62,9 @@
 		<pre >{{ translation.code }}</pre>
 	</div>
 	<div id="new-code" class="span5">
-		<button id="run" class="btn"><img src="/static/img/play.png"></button>
-		<button id="pause" class="btn"><img src="/static/img/pause.png"></button>
-		<button id="reset" class="btn"><img src="/static/img/reset.png"></button>
+		<button id="run" class="btn" title="run code"><img src="/static/img/play.png"></button>
+		<button id="pause" class="btn" title="pause code"><img src="/static/img/pause.png"></button>
+		<button id="reset" class="btn" title="reset code to original"><img src="/static/img/reset.png"></button>
 		<textarea id="code-area" rows="57" cols="50">{{translation.code|safe}}</textarea>
 	</div>
 </div>
@@ -76,11 +76,12 @@
 
 {% block scripts %}
 
-<script type="text/javascript">
+<script type="application/javascript">
 
 $(document).ready(function(){
 
 	var $originalcode = $('textarea').val();
+	var $processingInstance = Processing.getInstanceById('sketch');
 
 	$('#new-code').hide();
 	$('#edit').click(function(){
@@ -99,6 +100,12 @@ $(document).ready(function(){
 	$('#reset').click(function(){
 		$('#script').html($originalcode);
 		Processing.reload()
+	});
+
+	$('#pause').toggle(function(){
+		$processingInstance.noLoop();
+	}, function() {
+  		$processingInstance.loop();
 	});
 });
 
