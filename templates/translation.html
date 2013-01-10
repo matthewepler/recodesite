@@ -99,6 +99,7 @@ $(document).ready(function(){
 
 	$('#reset').click(function(){
 		$('#script').html($originalcode);
+		$('textarea').val($originalcode);
 		Processing.reload()
 	});
 
