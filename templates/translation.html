@@ -80,14 +80,17 @@
 
 $(document).ready(function(){
 
+	$('textarea').css('width', '510px');
 	var $originalcode = $('textarea').val();
+	var $processingInstance = Processing.getInstanceById('sketch');
 
 	$('#new-code').hide();
 
 	$('#edit').click(function(){
 		$('#orig-code').toggleClass('span5 offset1');
 		$('#new-code').toggle();
-		$('textarea').css('width', '510px');
+		$('#script').html($originalcode);
+		Processing.reload();
 	});
 
 	$('#run').click(function(id){
