@@ -1,47 +1,119 @@
 {% extends "/layout.html" %}
 
+{% block styles %}
+
+<style type="text/css">
+
+.moveover {
+	margin-left:0px;
+}
+
+</style>
+
+{% endblock%}
 
 {% block body %}
 
 <script type="text/javascript" src="/static/js/processing-1.4.1.min.js"></script>
 
-
-<div class="container">
+<div class="row">
+<div id="basic-info" class="span8 offset3" style="margin-top:100px">
 	<div class="row-fluid">
-		<div class="span10" style="margin-top:100px">
-			<h2>{{translation.title}}</h2>
-			<h3><a href="{{ translation.artist_url }}" target="_blank">{{ translation.artist }}</a></h3>
+		<h2>{{translation.title}}</h2>
+		<h3><a href="{{ translation.artist_url }}" target="_blank">{{ translation.artist }}</a></h3>
 		</br>
-			<p><strong>Based on: </strong><a href="/artwork/{{ orig.slug }}">{{ orig.title }}</a> by {{ orig.artist }}, {{ orig.date }}</p>
-			<p><strong>Category: </strong>{{ translation.category }}</p>
-			</br>
-			<p><strong>Description: </p></strong>
-			{% for line in descriptionList %}
-				<p>{{ line }}</p>
-			{% endfor %}
-			<hr style="margin:20px 0px 0px 0px">
-			</br>
-			
-			{% if translation.js == True %}	
-				<script type="application/processing" target="sketch">{{translation.code|safe}}</script>
-				<canvas id="sketch" name="sketch" style="border:1px solid black; image-rendering: -webkit-optimize-contrast !important;"></canvas>
-				</br>
-				</br>
-				<pre>{{ translation.code }}</pre>
-			{% elif translation.video|length > 5 %} <!-- for first round of translations -->
-				{{ translation.video|safe }}
-				</br>
-				</br>
-				<pre>{{ translation.code }}</pre>
-			{% else  %}
-				<img src={{ translation.photo_link }} style="align:center">
-				</br>
-				</br>
-				<pre>{{ translation.code }}</pre>
-			{% endif %}
-		</div>
+		<p><strong>Based on: </strong><a href="/artwork/{{ orig.slug }}">{{ orig.title }}</a> by {{ orig.artist }}, {{ orig.date }}</p>
+		<p><strong>Category: </strong>{{ translation.category }}
+		</p>
+		</br>
+		<p><strong>Description: </strong></p>
+		{% for line in descriptionList %}
+			<p>{{ line }}</p>
+		{% endfor %}
+		<hr style="margin:20px 0px 0px 0px">
+		</br>
+		</br>
 	</div>
-	</br>
 </div>
+</div>
+
+<div id="sketch-block" class="row offset3" >
+	{% if translation.js == True %}	
+		<script id="script" type="application/processing" target="sketch">{{translation.code|safe}}</script>
+		<canvas id="sketch" name="sketch" style="border:1px solid black; image-rendering: -webkit-optimize-contrast	!important;"></canvas>
+	{% elif translation.video|length > 5 %} <!-- for first round of translations -->
+		{{ translation.video|safe }}
+		<div id="orig-code" style="margin-top:40px">
+			<pre>{{ translatsion.code }}</pre>
+		</div>
+	{% else  %}
+		<img src={{ translation.photo_link }} style="align:center">
+		<div id="orig-code" style="margin-top:40px">
+			<pre>{{ translation.code }}</pre>
+		</div>
+	{% endif %}
+</div>
+<br>
+<br>
+
+<div id="code-block" class="row-fluid">
+	<div id="orig-code" class="span8 offset2">
+		<button id="edit" class="btn pull-right" data-toggle="button">Edit In Browser</button>
+		<pre >{{ translation.code }}</pre>
+	</div>
+	<div id="new-code" class="span5">
+		<button id="run" class="btn" title="run code"><img src="/static/img/play.png"> Run</button>
+		<button id="pause" class="btn" title="pause code"><img src="/static/img/pause.png"> Pause</button>
+		<button id="reset" class="btn" title="reset code to original"><img src="/static/img/reset.png"> Reset</button>
+		<textarea id="code-area" rows="100" cols="50">{{translation.code|safe}}</textarea>
+	</div>
+</div>
+<br>
+<br>
+{% endblock %}
+
+
+
+{% block scripts %}
+
+<script type="application/javascript">
+
+$(document).ready(function(){
+
+	$('textarea').css('width', '650px');
+	var $originalcode = $('textarea').val();
+	var $processingInstance = Processing.getInstanceById('sketch');
+
+	$('#new-code').hide();
+
+	$('#edit').click(function(){
+		$('#orig-code').toggleClass('span5 offset1');
+		$('#new-code').toggle();
+		$('#script').html($originalcode);
+		Processing.reload();
+	});
+
+	$('#run').click(function(id){
+		var $newcode = $('textarea').val();
+		$('#script').html($newcode);
+		Processing.reload();
+	});
+
+	$('#reset').click(function(){
+		$('#script').html($originalcode);
+		$('textarea').val($originalcode);
+		Processing.reload()
+	});
+
+	$('#pause').toggle(function(){
+		var $processingInstance = Processing.getInstanceById('sketch');
+		$processingInstance.noLoop();
+	}, function() {
+		var $processingInstance = Processing.getInstanceById('sketch');
+  		$processingInstance.loop();
+	});
+});
+
+</script>
 
 {% endblock %}
