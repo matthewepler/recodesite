@@ -78,27 +78,12 @@ def submit( artwork_slug ):
 				translation.photo_link = "https://s3.amazonaws.com/recode-files/" + filename
 
 		else:
-			return "uhoh there was an error " + photo_upload.filename
+			return "Uhoh! There was an error uploading " + photo_upload.filename
 
-		# PDE FILE
-		file_upload = request.files['file-upload']
-		if file_upload and allowed_file(file_upload.filename):
-			now = datetime.datetime.now()
-			filename = now.strftime('%Y%m%d%H%M%s') + "-" + secure_filename(file_upload.filename)
-			s3conn = boto.connect_s3(os.environ.get('AWS_ACCESS_KEY_ID'),os.environ.get('AWS_SECRET_ACCESS_KEY'))
-			b = s3conn.get_bucket(os.environ.get('AWS_BUCKET')) # bucket name defined in .env
-			k = b.new_key(b)
-			k.key = filename
-			k.set_metadata("Content-Type", file_upload.mimetype)
-
-			translation.code = "/* \nPart of the ReCode Project (http://recodeproject.com)\n" + "Based on \"" + orig.title + "\" by " + orig.artist + "\n" + "Originally published in \"" + orig.source + "\" " + orig.source_detail + ", " + orig.date + "\nCopyright (c) " + now.strftime('%Y') + " " + translation.artist + " - " + "OSI/MIT license (http://recodeproject/license).\n*/\n\n" + file_upload.stream.read()
-			k.set_contents_from_string(translation.code)
-			k.make_public()
-
-			translation.pde_link = "https://s3.amazonaws.com/recode-files/" + filename
-
-		else:
-			return "uhoh there was an error uploading " + file_upload.filename
+		# Pasted Code String (required)
+		translation.code = "/* \nPart of the ReCode Project (http://recodeproject.com)\n" + "Based on \"" + orig.title + "\" by " + orig.artist + "\n" + "Originally published in \"" + orig.source + "\" " + orig.source_detail + ", " + orig.date + "\nCopyright (c) " + now.strftime('%Y') + " " + translation.artist + " - " + "OSI/MIT license (http://recodeproject/license).\n*/\n\n/* @pjs pauseOnBlur='true'; */\n\n" + request.form.get('code').strip()
+		# if translation.code == "":
+		# 	return "Your code did not paste successfully. Please try again."
 
 		# JS Boolean
 		browser_note = "This sketch does not run in the browser."

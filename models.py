@@ -15,12 +15,12 @@ class Translation( mongoengine.Document ):
 	slug = mongoengine.StringField()
 	artwork_slug = mongoengine.StringField()
 	photo_link = mongoengine.StringField(required=True)
-	pde_link = mongoengine.StringField(required=True)
+	pde_link = mongoengine.StringField()  # depreciated 01/10/13
 	js = mongoengine.BooleanField()
 	description = mongoengine.StringField()
 	timestamp = mongoengine.DateTimeField(default=datetime.now())
-	video = mongoengine.StringField()	# depreciated 12/21/12
-	code = mongoengine.StringField()	
+	video = mongoengine.StringField()	  # depreciated 12/21/12
+	code = mongoengine.StringField(required=True)	
 
 class Artwork( mongoengine.Document ):
 	title = mongoengine.StringField()

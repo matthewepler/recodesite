@@ -62,10 +62,10 @@
 		<pre >{{ translation.code }}</pre>
 	</div>
 	<div id="new-code" class="span5">
-		<button id="run" class="btn" title="run code"><img src="/static/img/play.png"></button>
-		<button id="pause" class="btn" title="pause code"><img src="/static/img/pause.png"></button>
-		<button id="reset" class="btn" title="reset code to original"><img src="/static/img/reset.png"></button>
-		<textarea id="code-area" rows="57" cols="50">{{translation.code|safe}}</textarea>
+		<button id="run" class="btn" title="run code"><img src="/static/img/play.png"> Run</button>
+		<button id="pause" class="btn" title="pause code"><img src="/static/img/pause.png"> Pause</button>
+		<button id="reset" class="btn" title="reset code to original"><img src="/static/img/reset.png"> Reset</button>
+		<textarea id="code-area" rows="100" cols="50">{{translation.code|safe}}</textarea>
 	</div>
 </div>
 <br>
@@ -80,7 +80,7 @@
 
 $(document).ready(function(){
 
-	$('textarea').css('width', '510px');
+	$('textarea').css('width', '650px');
 	var $originalcode = $('textarea').val();
 	var $processingInstance = Processing.getInstanceById('sketch');
 
