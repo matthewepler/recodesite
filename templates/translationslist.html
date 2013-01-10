@@ -58,7 +58,12 @@ h5 {
                 {% for t in translations %}   
                     <li>
                         <div class="thumbnail">
-                            <a href="/translation/{{ t.slug }}"><img src={{ t.photo_link }}>
+                            {% if t.js == true %}
+                                <a href="/translation/{{ t.slug }}"><img src={{ t.photo_link }}>
+                                <a href="/translation/{{ t.slug }}"><img src="/static/img/jsbig.png" style="margin-top:-330px">
+                            {% else %}
+                                <a href="/translation/{{ t.slug }}"><img src={{ t.photo_link }}>
+                            {% endif %}
                             <div class="caption">
                                 "{{ t.title }}"</a>
                                 <p style="color:black">{{ t.artist }}</p>
