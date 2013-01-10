@@ -79,6 +79,9 @@
 <script type="text/javascript">
 
 $(document).ready(function(){
+
+	var $originalcode = $('textarea').val();
+
 	$('#new-code').hide();
 	$('#edit').click(function(){
 		$('#sketch').toggleClass('offset3');
@@ -86,18 +89,16 @@ $(document).ready(function(){
 		$('#new-code').toggle();
 		$('textarea').css('width', '510px');
 	});
-});
 
-</script>
-
-
-<script type="text/javascript">
-
-$(document).ready(function(){
 	$('#run').click(function(id){
-		var $code = $('textarea').val();
-		$('#script').html($code);
+		var $newcode = $('textarea').val();
+		$('#script').html($newcode);
+		Processing.reload();
+	});
 
+	$('#reset').click(function(){
+		$('#script').html($originalcode);
+		Processing.reload()
 	});
 });
 
