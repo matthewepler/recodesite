@@ -72,14 +72,14 @@ h5 {
                 or Filter
                 <form class="form-inline" name="filter_select" action="/translationslist" method="post">
                     <select name='filter'>
-                        <option selected="selected" value="hasTranslation">Has Translation</option>
+                        <option value="hasTranslation">Has Translation</option>
                         <option value="noTranslation">Awaiting Translation</option>
                         <option value="direct">Direct Translations</option>
                         <option value="experimental">Experimental Translations</option>
                         <option value="artist">Original Artists, A-Z</option>
                         <option value="title">Original Titles, A-Z</option>
                         <option value="translator">Translators, A-Z</option>
-                        <option value="js">Runs in Browser</option>
+                        <option value="js" selected="selected" >Runs in Browser</option>
                     </select>
                     <button type="submit" class="btn">Go</button>
                 </form>
