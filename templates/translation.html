@@ -94,8 +94,6 @@ $(document).ready(function(){
 			$('#orig-code').addClass('span5');
 			$('#orig-code').removeClass('offset2');
 			$('#orig-code').addClass('offset1');
-			$('#script').html($originalcode);
-			Processing.reload();
 		},
 		function(){
 			$('#new-code').hide();
@@ -103,6 +101,8 @@ $(document).ready(function(){
 			$('#orig-code').addClass('span7');
 			$('#orig-code').removeClass('offset1');
 			$('#orig-code').addClass('offset2');
+			$('#script').html($originalcode);
+			Processing.reload();
 		});
 
 	$('#run').click(function(id){
