@@ -43,24 +43,25 @@
 		<canvas id="sketch" name="sketch" style="border:1px solid black; image-rendering: -webkit-optimize-contrast	!important;"></canvas>
 	{% elif translation.video|length > 5 %} <!-- for first round of translations -->
 		{{ translation.video|safe }}
-		<div id="orig-code" style="margin-top:40px">
-			<pre>{{ translatsion.code }}</pre>
-		</div>
 	{% else  %}
 		<img src={{ translation.photo_link }} style="align:center">
-		<div id="orig-code" style="margin-top:40px">
-			<pre>{{ translation.code }}</pre>
-		</div>
 	{% endif %}
 </div>
 <br>
 <br>
 
 <div id="code-block" class="row-fluid">
-	<div id="orig-code" class="span8 offset2">
-		<button id="edit" class="btn pull-right" data-toggle="button">Edit In Browser</button>
-		<pre >{{ translation.code }}</pre>
-	</div>
+		{% if translation.js == True %}
+			<div id="orig-code" class="span7 offset2">
+				<button id="edit" class="btn pull-right" data-toggle="button">Edit In Browser</button>
+				<pre>{{ translation.code }}</pre>
+			</div>
+		{% else %}
+			<div id="orig-code" class="span7 offset2">
+				<pre>{{ translation.code }}</pre>
+			</div>
+		{% endif %}
+		
 	<div id="new-code" class="span5">
 		<button id="run" class="btn" title="run code"><img src="/static/img/play.png"> Run</button>
 		<button id="pause" class="btn" title="pause code"><img src="/static/img/pause.png"> Pause</button>
@@ -86,12 +87,23 @@ $(document).ready(function(){
 
 	$('#new-code').hide();
 
-	$('#edit').click(function(){
-		$('#orig-code').toggleClass('span5 offset1');
-		$('#new-code').toggle();
-		$('#script').html($originalcode);
-		Processing.reload();
-	});
+	$('#edit').toggle(
+		function(){
+			$('#new-code').show();
+			$('#orig-code').removeClass('span7');
+			$('#orig-code').addClass('span5');
+			$('#orig-code').removeClass('offset2');
+			$('#orig-code').addClass('offset1');
+			$('#script').html($originalcode);
+			Processing.reload();
+		},
+		function(){
+			$('#new-code').hide();
+			$('#orig-code').removeClass('span5');
+			$('#orig-code').addClass('span7');
+			$('#orig-code').removeClass('offset1');
+			$('#orig-code').addClass('offset2');
+		});
 
 	$('#run').click(function(id){
 		var $newcode = $('textarea').val();
