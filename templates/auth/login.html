@@ -1,0 +1,28 @@
+{% extends "/layout.html" %}
+
+
+{% block body %}
+  <div class="row">
+    <div class="offset1 span4">
+        <h2>Login</h2>
+
+        {% with messages = get_flashed_messages(category_filter=["login"]) %}
+          {% if messages %}
+            <ul class=flashes>
+            {% for message in messages %}
+              <li class="alert">{{ message }}</li>
+            {% endfor %}
+            </ul>
+          {% endif %}
+        {% endwith %}
+
+        <form class="well" method="post" action="/login">
+            {{ form.email.label }} {{ form.email(type="email") }}
+            {{ form.password.label }} {{ form.password }}<br>
+            <input type="checkbox" name="remember" value="yes"> Remember me
+            <br><br>
+            <input type="submit" value="Login">
+        </form>
+    </div>
+  </div>
+{% endblock %}
