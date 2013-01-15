@@ -2,19 +2,12 @@ import os, datetime, re
 from unidecode import unidecode
 from werkzeug import secure_filename
 
-from flask import Flask, request, render_template, redirect, Markup, session
+from flask import Flask, request, render_template, redirect, Markup
 from flask.ext.mongoengine import mongoengine
 
 import models
 import boto
-import StringIO
 
-from flask.ext.login import (LoginManager, current_user, login_required,
-                            login_user, logout_user, UserMixin, AnonymousUser,
-                            confirm_login, fresh_login_required)
-
-from flaskext.bcrypt import Bcrypt
-from libs.user import *
 
 mongoengine.connect( 'mydata', host=os.environ.get('MONGOLAB_URI') )
 
@@ -25,29 +18,6 @@ app.secret_key = os.environ.get('SECRET_KEY')
 
 AUTH_STR = os.environ.get('AUTH_STR')
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif', 'pde', 'js'])
-
-flask_bcrypt = Bcrypt(app)
-login_manager = LoginManager()
-login_manager.anonymous_user = Anonymous
-login_manager.login_view = "login"
-login_manager.login_message = u"Please log in to access this page."
-login_manager.refresh_view = "reauth"
-
-
-# ----------------------------------------------------------------- LOGIN >>>
-@login_manager.user_loader
-def load_user(id):
-	if id is None:
-		redirect('/login')
-
-	user = User()
-	user.get_by_id(id)
-	if user.is_active():
-		return user
-	else:
-		return None
-
-login_manager.setup_app(app)
 
 
 
