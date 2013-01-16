@@ -2,7 +2,7 @@ import os, datetime, re
 from unidecode import unidecode
 from werkzeug import secure_filename
 
-from flask import Flask, request, render_template, redirect, Markup
+from flask import Flask, request, render_template, redirect, Markup, jsonify
 from flask.ext.mongoengine import mongoengine
 
 import models
@@ -80,12 +80,22 @@ def submit( artwork_slug ):
 		else:
 			return "Uhoh! There was an error uploading " + photo_upload.filename
 
-		# Pasted Code String (required)
+		# CODE STRING (required)
 		translation.code = "/* \nPart of the ReCode Project (http://recodeproject.com)\n" + "Based on \"" + orig.title + "\" by " + orig.artist + "\n" + "Originally published in \"" + orig.source + "\" " + orig.source_detail + ", " + orig.date + "\nCopyright (c) " + now.strftime('%Y') + " " + translation.artist + " - " + "OSI/MIT license (http://recodeproject/license).\n*/\n\n/* @pjs pauseOnBlur='true'; */\n\n" + request.form.get('code').strip()
-		# if translation.code == "":
-		# 	return "Your code did not paste successfully. Please try again."
+		#backup as pde file
+		if translation.code:
+			now = datetime.datetime.now()
+			filename = "pde-" + translation.artist + "-" + orig.artist + "-" + orig.title + now.strftime('%Y%m%d%H%M%s') + ".pde"
+			s3conn = boto.connect_s3(os.environ.get('AWS_ACCESS_KEY_ID'),os.environ.get('AWS_SECRET_ACCESS_KEY'))
+			b = s3conn.get_bucket(os.environ.get('AWS_BUCKET')) # bucket name defined in .env
+			k = b.new_key(b)
+			k.key = filename
+			k.set_metadata("Content-Type", 'application/octet-stream')
+			k.set_contents_from_string(translation.code)
+			k.make_public()
+			translation.pde_link = "https://s3.amazonaws.com/recode-files/" + filename
 
-		# JS Boolean
+		# JS BOOLEAN
 		browser_note = "This sketch does not run in the browser."
 		if request.form.get('js') == "True":
 			translation.js = True
@@ -314,28 +324,66 @@ def license():
 
 	return render_template("license.html")
 
+
+
+# ---------------------------------------------------------------- DATA >>>
+@app.route("/data")
+def data():
+	# Give title, artist, original work img URL, list of recodes w/author, recode img URLs, runs in-browser flag.
+	artworks = []
+
+	all_artworks = models.Artwork.objects()
+	for a in all_artworks:
+		app.logger.debug( a.title )
+		artwork = {
+			'title' : a.title,
+			'artist' : a.artist,
+			'orig_img_url' : a.photo_link,
+		}
+
+		if a.hasTranslation == 'yes': 
+			artwork['recodes'] = []
+			all_translations = models.Translation.objects(artwork_slug=a.slug)
+			for at in all_translations:
+				recode = {
+					'author' : at.artist,
+					'recode_img_url' : at.photo_link,
+					'js' : at.js,
+					'pde_link' : at.pde_link
+				}
+				artwork['recodes'].append(recode)
+
+		artworks.append(artwork)
+
+	data = {
+		'status' : 'OK',
+		'artworks' : artworks
+	}
+
+	return jsonify(data)
+
+
 # ---------------------------------------------------------------- TEST >>>
 @app.route("/test")
 def test():
 
-	names = []
+	all_translations = models.Translation.objects()
+	for at in all_translations:
+		orig = models.Artwork.objects.get(slug=at.artwork_slug)
+		app.logger.debug("found original: " + orig.title + ", " + orig.artist)
+		now = datetime.datetime.now()
+		filename = "pde-" + at.artist + "-" + orig.artist + "-" + orig.title + now.strftime('%Y%m%d%H%M%s') + ".pde"
+		s3conn = boto.connect_s3(os.environ.get('AWS_ACCESS_KEY_ID'),os.environ.get('AWS_SECRET_ACCESS_KEY'))
+		b = s3conn.get_bucket(os.environ.get('AWS_BUCKET')) # bucket name defined in .env
+		k = b.new_key(b)
+		k.key = filename
+		k.set_metadata("Content-Type", 'application/octet-stream')
+		k.set_contents_from_string(at.code)
+		k.make_public()
+		at.pde_link = "https://s3.amazonaws.com/recode-files/" + filename	
+		app.logger.debug( at.pde_link )			
 
-	allArtworks = models.Artwork.objects()
-	for a in allArtworks:
-		name = a.artist
-		exists = True
-		if exists == False:
-			names.append( name )
-			app.logger.debug( "* added: " + name )
-		else:
-			app.logger.debug( "! duplicate: " + name )
-
-	templateData = {
-		'names' : names
-	}
-				
-
-	return render_template("/test.html", **templateData)
+	return render_template("/")
 	# allTranslations = models.Translation.objects()
 	# for t in allTranslations:
 	# 	t.update( {$rename : {photo : photo_link }} )
@@ -365,7 +413,7 @@ def slugify(text, delim=u'-'):
 
 #--------------------------------------------------------- SERVER START-UP >>>
 if __name__ == "__main__":
-	app.debug = False
+	app.debug = True
 	
 	port = int(os.environ.get('PORT', 5000)) # locally PORT 5000, Heroku will assign its own port
 	app.run(host='0.0.0.0', port=port)
