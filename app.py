@@ -338,7 +338,8 @@ def data():
 		artwork = {
 			'title' : a.title,
 			'artist' : a.artist,
-			'orig_img_url' : a.photo_link,
+			'year' : a.date,
+			'orig_img_url' : "http://recodeproject.com" + a.photo_link,
 		}
 
 		if a.hasTranslation == 'yes': 
@@ -347,7 +348,9 @@ def data():
 			for at in all_translations:
 				recode = {
 					'author' : at.artist,
-					'recode_img_url' : at.photo_link,
+					'title' : at.title,
+					'category' : at.category,
+					'recode_img_url' : "http://recodeproject.com" + at.photo_link,
 					'js' : at.js,
 					'pde_link' : at.pde_link
 				}
