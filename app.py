@@ -1,27 +1,58 @@
 import os, datetime, re
 from unidecode import unidecode
 from werkzeug import secure_filename
+from flask import Flask, request, render_template, redirect, Markup, current_app, session, flash, url_for
+from flask.ext.assets import Environment
 
-from flask import Flask, request, render_template, redirect, Markup
+
 from flask.ext.mongoengine import mongoengine
+from flask.ext.mongoengine import MongoEngine
 
-import models
+
+from flask.ext.security import Security, MongoEngineUserDatastore
+from flask.ext.social import Social, login_failed
+from flask.ext.social.utils import get_conection_values_from_oauth_response
+from flask.ext.security import login_required, LoginForm, current_user, login_user
+
+
+from flask.ext.social.utils import get_provider_or_404
+from flask.ext.social.views import connect_handler
 import boto
+import models, forms, tools
+import github, twitter, facebook
 
 
-mongoengine.connect( 'mydata', host=os.environ.get('MONGOLAB_URI') )
 
+
+# ----------------------------------------------------------------- APP CONFIG >>>
 app = Flask(__name__)   
+app.config['SECURITY_CONFIRMABLE'] = True
+app.config['SECURITY_TRACKABLE'] = True
 app.config['CSRF_ENABLED'] = True
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
-app.secret_key = os.environ.get('SECRET_KEY')
+app.config['MONGODB_DB'] = 'heroku_app8905639'
+app.config['MONGODB_HOST'] = 'mongolab.com'
+app.config['MONGODB_PORT'] = '43037'
+app.config['SECRET_KEY'] = os.environ.get('AUTH_STR')
+
+
+# ----------------------------------------------------------------- DATABASE CONNECTION >>>
+mongoengine.connect('mydata', host=os.environ.get('MONGOLAB_URI'))
+
+# ----------------------------------------------------------------- GLOBAL VARIABLES >>>
+db = MongoEngine(app)
+webassets = Environment(app)
+user_datastore = MongoEngineUserDatastore(db, models.User, models.Role)
+security = Security(app, user_datastore)
 
 AUTH_STR = os.environ.get('AUTH_STR')
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif', 'pde', 'js'])
 
 
 
-# ----------------------------------------------------------------- HOME >>>
+
+
+# ---------------------------------------------------------------- HOME >>>
 @app.route( "/" )
 def index():
 
@@ -32,6 +63,112 @@ def index():
 	}
 
 	return render_template( "index.html", **templateData )
+
+
+# ----------------------------------------------------------------- LOGIN >>>
+@app.route( "/login" )
+def login():
+
+    if current_user.is_authenticated():
+        return redirect(request.referrer or '/')
+
+    return render_template('login.html', form=LoginForm())
+
+# ----------------------------------------------------------------- REGISTER >>>
+@app.route('/register', methods=['GET', 'POST'])
+@app.route('/register/<provider_id>', methods=['GET', 'POST'])
+def register(provider_id=None):
+    if current_user.is_authenticated():
+        return redirect(request.referrer or '/')
+
+    form = forms.RegisterForm()
+
+    if provider_id:
+        provider = get_provider_or_404(provider_id)
+        connection_values = session.get('failed_login_connection', None)
+    else:
+        provider = None
+        connection_values = None
+
+    if form.validate_on_submit():
+        ds = current_app.security.datastore
+        user = ds.create_user(email=form.email.data, password=form.password.data)
+        ds.commit()
+
+        # See if there was an attempted social login prior to registering
+        # and if so use the provider connect_handler to save a connection
+        connection_values = session.pop('failed_login_connection', None)
+
+        if connection_values:
+            connection_values['user_id'] = user.id
+            connect_handler(connection_values, provider)
+
+        if login_user(user):
+            ds.commit()
+            flash('Account created successfully', 'info')
+            return redirect(url_for('profile'))
+
+        return render_template('/security/thanks.html', user=user)
+
+    login_failed = int(request.args.get('login_failed', 0))
+
+    return render_template('/security/register.html',
+                           form=form,
+                           provider=provider,
+                           login_failed=login_failed,
+                           connection_values=connection_values)
+
+
+
+# ----------------------------------------------------------------- PROFILE >>>
+@app.route('/profile')
+@login_required
+def profile():
+    return render_template('profile.html',
+        twitter_conn=current_app.social.twitter.get_connection(),
+        facebook_conn=current_app.social.facebook.get_connection(),
+        google_conn=current_app.social.google.get_connection(),
+        github_conn=current_app.social.github.get_connection())
+
+
+@app.route('/profile/<provider_id>/post', methods=['POST'])
+@login_required
+def social_post(provider_id):
+    message = request.form.get('message', None)
+
+    if message:
+        conn = getattr(current_app.social, provider_id).get_connection()
+        api = conn['api']
+
+        if provider_id == 'twitter':
+            display_name = 'Twitter'
+            api.PostUpdate(message)
+        if provider_id == 'facebook':
+            display_name = 'Facebook'
+            api.put_object("me", "feed", message=message)
+
+        flash('Message posted to %s: %s' % (display_name, message), 'info')
+
+    return redirect(url_for('profile'))
+
+
+
+# ----------------------------------------------------------------- ADMIN >>>
+@app.route('/admin')
+@tools.requires_auth
+def admin():
+    users = models.User.query.all()
+    return render_template('admin.html', users=users)
+
+
+@app.route('/admin/users/<user_id>', methods=['DELETE'])
+@tools.requires_auth
+def delete_user(user_id):
+    user = models.User.query.get_or_404(user_id)
+    db.session.delete(user)
+    db.session.commit()
+    flash('User deleted successfully', 'info')
+    return redirect(url_for('admin'))
 
 
 # ---------------------------------------------------------------- SUBMIT >>>
@@ -361,14 +498,46 @@ def slugify(text, delim=u'-'):
 	return unicode(delim.join(result))
 
 
-
-#--------------------------------------------------------- SERVER START-UP >>>
+# ---------------------------------------------------------------- SERVER START-UP >>>
 if __name__ == "__main__":
-	app.debug = False
+	app.debug = True
 	
-	port = int(os.environ.get('PORT', 5000)) # locally PORT 5000, Heroku will assign its own port
+	port = int(os.environ.get('PORT', 5000)) 
 	app.run(host='0.0.0.0', port=port)
 
+class SocialLoginError(Exception):
+    def __init__(self, provider):
+        self.provider = provider
 
 
-	
+@app.before_first_request
+def before_first_request():
+    try:
+        models.db.create_all()
+    except Exception, e:
+        app.logger.error(str(e))
+
+
+@app.context_processor
+def template_extras():
+    return dict(
+        google_analytics_id=app.config.get('GOOGLE_ANALYTICS_ID', None))
+
+
+@login_failed.connect_via(app)
+def on_login_failed(sender, provider, oauth_response):
+    app.logger.debug('Social Login Failed via %s; '
+                     '&oauth_response=%s' % (provider.name, oauth_response))
+
+    # Save the oauth response in the session so we can make the connection
+    # later after the user possibly registers
+    session['failed_login_connection'] = \
+        get_conection_values_from_oauth_response(provider, oauth_response)
+
+    raise SocialLoginError(provider)
+
+
+@app.errorhandler(SocialLoginError)
+def social_login_error(error):
+    return redirect(
+        url_for('register', provider_id=error.provider.id, login_failed=1))

@@ -1,9 +1,11 @@
 # -*- coding: utf-8 -*-
 from flask.ext.mongoengine.wtf import model_form
-from wtforms.fields import * # for our custom signup form
+from wtforms.fields import * 
 from flask.ext.mongoengine.wtf.orm import validators
 from flask.ext.mongoengine import *
 from datetime import datetime
+from flask.ext.security import UserMixin, RoleMixin
+
 
 
 class Translation( mongoengine.Document ):
@@ -34,6 +36,35 @@ class Artwork( mongoengine.Document ):
 	slug = mongoengine.StringField()
 	description = mongoengine.StringField()
 	hasTranslation = mongoengine.StringField()
+
+class Role(mongoengine.Document, RoleMixin):
+    name = mongoengine.StringField(max_length=80, unique=True)
+    description = mongoengine.StringField(max_length=255)
+
+class User(mongoengine.Document, UserMixin):
+    email = mongoengine.StringField(max_length=255)
+    password = mongoengine.StringField(max_length=255)
+    active = mongoengine.BooleanField(default=True)
+    confirmed_at = mongoengine.DateTimeField()
+    last_login_at = mongoengine.DateTimeField()
+    current_login_at = mongoengine.DateTimeField()
+    last_login_ip = mongoengine.DateTimeField()
+    current_login_ip = mongoengine.DateTimeField()
+    login_count = mongoengine.DateTimeField()
+    roles = mongoengine.ListField(mongoengine.ReferenceField(Role), default=[])
+
+
+class Connection(mongoengine.Document):
+    id = mongoengine.IntField(primary_key=True)
+    user_id = mongoengine.ReferenceField('User', dbref=True)
+    provider_id = mongoengine.StringField(max_length=255)
+    provider_user_id = mongoengine.StringField(max_length=255)
+    access_token = mongoengine.StringField(max_length=255)
+    secret = mongoengine.StringField(max_length=255)
+    display_name = mongoengine.StringField(max_length=255)
+    profile_url = mongoengine.StringField(max_length=512)
+    image_url = mongoengine.StringField(max_length=512)
+    rank = mongoengine.IntField()
 
 
 
