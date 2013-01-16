@@ -15,7 +15,7 @@ class Translation( mongoengine.Document ):
 	slug = mongoengine.StringField()
 	artwork_slug = mongoengine.StringField()
 	photo_link = mongoengine.StringField(required=True)
-	pde_link = mongoengine.StringField()  # depreciated 01/10/13
+	pde_link = mongoengine.StringField()  # depreciated 01/10/13, brought back 01/16/13
 	js = mongoengine.BooleanField()
 	description = mongoengine.StringField()
 	timestamp = mongoengine.DateTimeField(default=datetime.now())
