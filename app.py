@@ -85,7 +85,10 @@ def submit( artwork_slug ):
 		#backup as pde file
 		if translation.code:
 			now = datetime.datetime.now()
-			filename = "pde-" + translation.artist + "-" + orig.artist + "-" + orig.title + now.strftime('%Y%m%d%H%M%s') + ".pde"
+			now = now.strftime('%Y%m%d%H%M%s')
+			now = now.encode('ASCII')
+			filename = translation.artist + now + ".pde"
+			filename = filename.replace(" ", "").encode('ASCII')
 			s3conn = boto.connect_s3(os.environ.get('AWS_ACCESS_KEY_ID'),os.environ.get('AWS_SECRET_ACCESS_KEY'))
 			b = s3conn.get_bucket(os.environ.get('AWS_BUCKET')) # bucket name defined in .env
 			k = b.new_key(b)
@@ -93,7 +96,8 @@ def submit( artwork_slug ):
 			k.set_metadata("Content-Type", 'application/octet-stream')
 			k.set_contents_from_string(translation.code)
 			k.make_public()
-			translation.pde_link = "https://s3.amazonaws.com/recode-files/" + filename
+			root = "https://s3.amazonaws.com/recode-files/"
+			translation.pde_link =  root.encode('ASCII') + filename	
 
 		# JS BOOLEAN
 		browser_note = "This sketch does not run in the browser."
