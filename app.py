@@ -351,11 +351,13 @@ def data():
 			artwork['recodes'] = []
 			all_translations = models.Translation.objects(artwork_slug=a.slug)
 			for at in all_translations:
+				split = at.photo_link.split("/")
+				imglinkrel = split[4]
 				recode = {
 					'author' : at.artist,
 					'title' : at.title,
 					'category' : at.category,
-					'recode_img_url' : "https://s3.amazonaws.com/recode-files/" + at.photo_link,
+					'recode_img_url' : "https://s3.amazonaws.com/recode-files/" + imglinkrel,
 					'js' : at.js,
 					'pde_link' : at.pde_link,
 					'id' : str(at.id),
