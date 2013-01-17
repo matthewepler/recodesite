@@ -45,7 +45,7 @@ def submit( artwork_slug ):
 	if request.method == "POST":
 		
 		translation = models.Translation()
-
+		translation.timestamp = datetime.datetime.now()
 		translation.title = request.form.get('title') 				# required
 		if translation.title == "":
 			return "Please give your translation a title."
@@ -344,6 +344,7 @@ def data():
 			'artist' : a.artist,
 			'year' : a.date,
 			'orig_img_url' : "http://recodeproject.com" + a.photo_link,
+			'id' : str(a.id),
 		}
 
 		if a.hasTranslation == 'yes': 
@@ -356,7 +357,9 @@ def data():
 					'category' : at.category,
 					'recode_img_url' : "http://recodeproject.com" + at.photo_link,
 					'js' : at.js,
-					'pde_link' : at.pde_link
+					'pde_link' : at.pde_link,
+					'id' : str(at.id),
+					'timestamp' : str(a.id.generation_time)
 				}
 				artwork['recodes'].append(recode)
 
