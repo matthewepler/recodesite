@@ -345,6 +345,7 @@ def data():
 			'year' : a.date,
 			'orig_img_url' : "http://recodeproject.com" + a.photo_link,
 			'id' : str(a.id),
+			'static_url' : "http://recodeproject.com/artwork/" + a.slug
 		}
 
 		if a.hasTranslation == 'yes': 
@@ -355,11 +356,12 @@ def data():
 					'author' : at.artist,
 					'title' : at.title,
 					'category' : at.category,
-					'recode_img_url' : "http://recodeproject.com" + at.photo_link,
+					'recode_img_url' : at.photo_link,
 					'js' : at.js,
 					'pde_link' : at.pde_link,
 					'id' : str(at.id),
-					'timestamp' : str(a.id.generation_time)
+					'timestamp' : str(a.id.generation_time),
+					'static_url' : "http://recodeproject.com/translation/" + at.slug
 				}
 				artwork['recodes'].append(recode)
 
@@ -374,30 +376,18 @@ def data():
 
 
 # ---------------------------------------------------------------- TEST >>>
-@app.route("/test")
+@app.route("/testtesttest")
 def test():
 
 	# all_translations = models.Translation.objects()
 
 	# for t in all_translations:
-	# 	now = datetime.datetime.now()
-	# 	now = now.strftime('%Y%m%d%H%M%s')
-	# 	now = now.encode('ASCII')
-	# 	filename = t.artist + now + ".pde"
-	# 	filename = filename.replace(" ", "").encode('ASCII')
-	# 	s3conn = boto.connect_s3(os.environ.get('AWS_ACCESS_KEY_ID'),os.environ.get('AWS_SECRET_ACCESS_KEY'))
-	# 	b = s3conn.get_bucket(os.environ.get('AWS_BUCKET')) # bucket name defined in .env
-	# 	k = b.new_key(b)
-	# 	k.key = filename
-	# 	k.set_metadata("Content-Type", 'application/octet-stream')
-	# 	k.set_contents_from_string(t.code)
-	# 	k.make_public()
-	# 	root = "https://s3.amazonaws.com/recode-files/"
-	# 	t.pde_link =  root.encode('ASCII') + filename	
-	# 	app.logger.debug( t.pde_link )		
-	# 	if t.artist_email is None:
-	# 		t.artist_email = "None"
-	# 	t.save()	
+	# 	if "static" in t.photo_link:
+	# 		split = t.photo_link.split("/")
+	# 		t.photo_link = "https://s3.amazonaws.com/recode-files/" + split[4]
+	# 		t.save
+	# 		app.logger.debug(t.photo_link)
+
 
 	return render_template("index.html")
 	# allTranslations = models.Translation.objects()
