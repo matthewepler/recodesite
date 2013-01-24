@@ -321,6 +321,8 @@ def search():
 		error_str = "No results were returned. If you think this is an error, please send us an email using the mail icon at the top-right of your screen."
 		return render_template("searchresults.html", error_str=error_str)
 
+
+
 @app.route("/license")
 def license():
 
@@ -374,6 +376,12 @@ def data():
 	}
 
 	return jsonify(data)
+
+
+@app.route("/guide")
+def guide():
+
+	return render_template("userguide.html")
 
 
 # ---------------------------------------------------------------- TEST >>>

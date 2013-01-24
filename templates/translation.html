@@ -66,7 +66,7 @@
 		<button id="run" class="btn" title="run code"><img src="/static/img/play.png"> Run</button>
 		<button id="pause" class="btn" title="pause code"><img src="/static/img/pause.png"> Pause</button>
 		<button id="reset" class="btn" title="reset code to original"><img src="/static/img/reset.png"> Reset</button>
-		<textarea id="code-area" rows="100" cols="50">{{translation.code|safe}}</textarea>
+		<textarea id="code-area" class="lined" rows="100" cols="50">{{translation.code|safe}}</textarea>
 	</div>
 </div>
 <br>
@@ -81,15 +81,16 @@
 
 $(document).ready(function(){
 
-	$('textarea').css('width', '650px');
 	var $originalcode = $('textarea').val();
 	var $processingInstance = Processing.getInstanceById('sketch');
 
 	$('#new-code').hide();
+	$('textarea').css('width', '650px');  	
 
 	$('#edit').toggle(
 		function(){
 			$('#new-code').show();
+			$('#new-code').addClass('lined');
 			$('#orig-code').removeClass('span7');
 			$('#orig-code').addClass('span5');
 			$('#orig-code').removeClass('offset2');
@@ -124,6 +125,7 @@ $(document).ready(function(){
 		var $processingInstance = Processing.getInstanceById('sketch');
   		$processingInstance.loop();
 	});
+
 });
 
 </script>

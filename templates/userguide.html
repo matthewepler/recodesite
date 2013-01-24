@@ -1,0 +1,113 @@
+{% extends "/layout.html" %}
+
+{% block styles %}
+{% endblock %}
+
+{% block body %}
+
+<div style="margin-top:75px;">
+	<div class="container">
+		<div class="row">
+			<h1 style="text-align:center;">USER GUIDE</h1>
+		</div>
+
+		<hr>
+		<br>
+		<br>
+
+		<h3>Introduction</h3>
+		<br>
+		<p>ReCode Project is a response to a need for more historical context in the practice of creative computation. We believe there is a lot to learn from the coders that came before us and that just because it’s old doesn’t mean it’s out-of-date.</p>
+
+		<p>The project's main goals are:</p>
+			<ol>
+				<li>Bring pioneering works of computational art back into circulation.</li>
+				<li>Offer a learning resource to contemporary practicioners and educators.</li>
+				<li>Create an active community.</li>
+			</ol>
+
+		<p>ReCode Project is still in its infancy and will be growing significantly in the coming months. We hope to contact the original artists, gather more documentation, and get more works and code up on the site for you to dive into. Your suggestions and feedback are always welcome. Keep in touch!</p>
+
+		<p>You don’t have to be a programmer to use this site. Below are some general suggestions for getting started, based on experience level.</p>
+
+		<br>
+		<br>
+
+		<h3>How to Start</h3>
+		<br>
+		<h4><strong>// Beginner</strong></h4>
+		<br>
+		<p>A lot of these artworks are more complicated than they look. Many of them were coded by mathematicians, physicists, scientists, or generally brilliant folks. Don’t let that stop you from trying to figure out the basic logic of what they are trying to achieve.</p>
+		
+		<p>We recommend you start by choosing a piece you like from the list of completed translations. From the home page, click the “see all translations” link or use the drop-down list to filter the database. It’s important to pick a piece that already has a translation because most of these original documents do not include source code.</p>
+
+		<p>Once you’ve selected a piece and have navigated to its page, click the link next to “source document” in the info section at the top of the artwork’s page. There might be some interesting information in there about how the piece was created.</p>
+
+		<p>Next, dive right into the code. If it’s available, click the “Edit in Browser” button and start changing numbers and see what happens. If that button isn’t there (it should be at the top right of the code block and indicates that the code can run with ProcessingJS in the browser), then just copy the code and paste it into a new project window in the Processing application on your computer. Then do the same thing – mess with it, bend it, break it. The more you play with it, the more the general logic of the piece will begin to reveal itself.</p>
+
+		<p>Once you have an idea of how it works, make the code produce something interesting. Go nuts. When you have something you like, save your code locally on your machine so you’ll always have a copy. Then go to the page for the original piece and click the “Add+” button under the image of the original artwork. That will take you to the submit page.</p>
+
+		<p>Fill out the form, it’s fairly self-explanatory. Submit your work as an “Experimental” translation, since you are making it do something new. When you get to the “Runs in Browser” checkbox, you will need to test your code before you check this box. To do that, open your code in the Processing application on your computer and click the button in the upper-right of your code window. If you haven’t changed it already, it should say “Standard.” When you click, you’ll see a list. Choose “JavaScript.” It may ask you to save your sketch first. Do that and then choose JavaScript again. When you click run, Processing will open your default browser and attempt to run your code there. If nothing comes up or you just see a black square, then something is wrong.</p>
+
+		<p>If your code doesn’t run, check the Processingjs.org website to get a better understanding of what will work in PJS and if you can fix your code to work in the browser.</p>
+
+		<p>Fill out the form as instructed and submit.</p>
+
+		<p>If you don’t like the way your code works or looks after you’ve submitted it, email us (info@recodeproject.com) with the changes you want to make and we will update it ASAP. We’ll have user accounts up and running soon you can edit it yourself.</p>
+
+		<p>We will be checking the site for new translations and will be tweeting them out as they happen. Send an email with a link to your translation and your Twitter handle if you’d like to be mentioned ala @yourname.</p>
+
+		<br>
+		<br>
+		<h4><strong>// Intermediate</strong></h4>
+		<br>
+		<p>Find a piece you like by browsing the home page, or using the drop-down filter option at the top of the home page. After choosing one, immediately click the “source document” link, located on the artwork’s page below its title. </p>
+
+		<p>Look over the publication for any information that might help you figure out how the artwork was created. There might be mentions of the original language, functions used, etc. </p>
+
+		<p>Research the author and the piece itself online. If you get lucky, you might find some source code or papers about the piece. If you do, keep track of the URLs, and include them in the description of your translation so we can all see them.</p>
+
+		<p>Once you have some background on the piece, Choose whether or not you want to expand on an existing translation, or start from scratch. If a translation exists already, bend it, break it, twist it around. The goal is to find the general logic of how the piece is created. If there is not translation yet, then it’s up to you how you start. </p>
+
+		<p>At this point, you have a choice to make. Either you want to make a direct translation (one that maintains the final visual output and original code logic as closely as possible, given the available information) or an experimental one (expanding on the original idea, use the general logic or visual product of the piece as a starting point to do something new). </p>
+
+		<p>In some cases, you may find a direct translation that you think could be improved or approached in a different way. By all means, contribute a new direct translation! There will be a wide range of interpretations.</p>
+
+		<p>Once you’re done, go back to the original artwork’s page and click the “Add+” button to submit your translation. Please include any resources you used in the “description” field.</p>
+
+		<p>If you don’t like the way your code works or looks after you’ve submitted it, email us (info@recodeproject.com) with the changes you want to make and we will update it ASAP. We’ll have user accounts up and running soon you can edit it yourself.</p>
+
+		<p>We will be checking the site for new translations and will be tweeting them out as they happen. Send an email with a link to your translation and your Twitter handle if you’d like to be mentioned ala @yourname.</p>
+
+		<br>
+		<br>
+		<h4><strong>// Advanced</strong></h4>
+		<br>
+		<p>Before starting, read the “Beginner” and “Intermediate” sections to get a sense of what everyone is up to. If you are interested in making translations of existing work on the site as described in those sections, simply follow the guidelines for “Intermediate” and have fun!</p>
+
+		<p>OR...You might be able to help expand the project in some new directions.</p>
+
+		<p>One of the features we would like to see implemented on the site is a search function that allows the user to find works that share a common code concept. </p>
+
+		<p>For instance, if Delaunay Triangulation is used in more than one piece, we’d like to see all those pieces show up in a search for “Delaunay” so we can see how the concept can be applied for different purposes. This has the potential to be the most powerful element of ReCode Project as an educational resource for creative coders and educators. </p>
+
+		<p>To do that, we need your help. Users who are familiar with these concepts (that’s you) can identify concepts in the existing translations already posted to the site. The line at which to insert a comment and the comment text can be sent to us and we’ll change it directly in the database. </p>
+
+		<p>We will make all attempts to contact the author first and get their approval before making changes to their translations. In the event we are unable to reach them or they do not want their code changed, we can add the notes elsewhere on the page. Ideally, the comments appear in the code so if the code is shared elsewhere, the concept comments survive. </p>
+
+		<p>If this is confusing, please just contact us (info@recodeproject.com). We haven’t gotten to adding line numbers to the site’s "pre" and "textarea" elements yet, so you may have to paste code into a text editor with numbered lines for reference. That will help everyone keep track of what we are changing and where it appears in the code. </p>
+
+		<p>On that note, if you’d like to contribute to the site’s development directly, the code is available on GitHub:</p>
+		<br>
+		<p><a href="https://github.com/matthewepler/recodesite">https://github.com/matthewepler/recodesite</a></p>
+		<br>
+
+		<p>The app is written in Flask (Python) and uses MongoEngine/MongoDB for the database. Just fork the repo and add or edit whatever you wish. Submit a Merge Request and we’ll look it over and contact you if we have any questions.</p>
+
+		<p>Thanks for your support and please don’t hesitate to make suggestions or give feedback. This is a community effort and we want to make the project as good as it can be. Carry on.</p>
+	</div>
+</div>
+<hr>
+<br>
+<br>
+{% endblock %}
