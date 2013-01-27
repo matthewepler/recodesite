@@ -80,7 +80,7 @@ def submit( artwork_slug ):
 			return "Uhoh! There was an error uploading " + photo_upload.filename
 
 		# CODE STRING (required)
-		translation.code = "/* \nPart of the ReCode Project (http://recodeproject.com)\n" + "Based on \"" + orig.title + "\" by " + orig.artist + "\n" + "Originally published in \"" + orig.source + "\" " + orig.source_detail + ", " + orig.date + "\nCopyright (c) " + now.strftime('%Y') + " " + translation.artist + " - " + "OSI/MIT license (http://recodeproject/license).\n*/\n\n/* @pjs pauseOnBlur='true'; */\n\n" + request.form.get('code').strip()
+		translation.code = "/* \nPart of the ReCode Project (http://recodeproject.com)\n" + "Based on \"" + orig.title + "\" by " + orig.artist + "\n" + "Originally published in \"" + orig.source + "\" " + orig.source_detail + ", " + orig.date + "\nCopyright (c) " + now.strftime('%Y') + " " + translation.artist + " - " + "OSI/MIT license (http://recodeproject/license).\n*/\n\n/* @pjs pauseOnBlur=\"true\"; */\n\n" + request.form.get('code').strip()
 		#backup as pde file
 		if translation.code:
 			now = datetime.datetime.now()
