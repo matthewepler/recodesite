@@ -383,6 +383,11 @@ def guide():
 
 	return render_template("userguide.html")
 
+@app.route("/survey")
+def survey():
+
+	return render_template("survey.html")
+
 
 # ---------------------------------------------------------------- TEST >>>
 @app.route("/testtesttest")
