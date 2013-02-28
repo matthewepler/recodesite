@@ -1,0 +1,93 @@
+{% extends "/layout.html" %}
+
+{% block styles %}
+<style type="text/css">
+	#footer {
+		margin-left:25%;
+	}
+</style>
+{% endblock %}
+
+{% block body %}
+
+<div style="margin-top:75px;">
+	<div class="container">
+		<div class="row">
+			<h1>FEATURED PROJECTS</h1>
+		</div>
+		<br>
+		<br>
+		<div class="row">
+			<h3><em>Spiral5PTL </em>(Daniel Sandin, 1975)</h3>
+			<br>
+			<p>Early in 2013, <a href="http://www.evl.uic.edu/processing-chicago/">Processing Chicago</a> hosted an event in tandem with ReCode Project. Unlike most ReCode translation projects, P5 Chicago chose to translate an early work of video art by <a href="http://www.youtube.com/watch?v=wdysHHZZTYA&feature=share&list=UU3GTGwIcQfqqMS-Wt9uMwyQ">Daniel Sandin</a>. The choice is unique not only for its medium, but also because the original piece was a live performace. Translating this kind of work raised a lot of interesting questions, the most important of which was how to maintain the original intent and feel of the work in a coded, non-live environment. 
+			</p>
+			<p>In their breif to the attendees, the organizers emphasized "As this piece was originally performed, the goal is to create a framework that allows new performances. So, we ask that people who work on this keep it that way. That can take any form one prefers, e.g. a Processing UI library (like controlP5), Processing talking to an Arduino + knobs, buttons, etc." </p>
+
+			<p>To that end, the group set to work with a few goals specific to <em>Spiral5PTL</em>:
+			</p>
+
+			<ul>
+				<li>Maintain the artifacts caused by the PDP-11 Vector General Calligraphic Display, such as slowly decaying visual forms.</li>
+				<li>Accompanying sounds similar to what was done originally on an ARP 2600 analog synthesizer.</li>
+				<li>Provide a user interface that allows ease of performance, and the ability to change parameters of the piece quickly and easily, with the ability to save certain states for resuse.</li>
+			</ul> 
+			<br>
+			<p>The code for this translation can be seen on GitHub: <a href="https://github.com/spiralP5/spiralP5">https://github.com/spiralP5/spiralP5</a>.</p>
+			<br>
+			<p>Below are some responses from one of the founders of Processing Chicago, JD Pirtle.</p>
+			<br>
+			<br>
+
+			<!-- Video Frame -->
+			<div style="align:center">
+				<iframe width="840" height="630" src="http://www.youtube.com/embed/hw9kY85DkfE" frameborder="0" allowfullscreen></iframe>
+			</div>
+			<br>
+			<br>
+
+			<hr>
+
+			<br>
+			<br>
+
+			<h4>How did you find Spiral5PTL, and why did you chose it to work on?</h4>
+			<br>
+			<p>I chose Spiral5PTL due to the fact that I am employed as a researcher at the Electronic Visualization Lab at the University of Illinois at Chicago, and Spiral5PTL is a work by the founders of this lab (Dan Sandin and Tom Defanti).  Both are pioneers in computer graphics, video processing and transdisciplinary art making.  They founded the lab in 1973, and in 1980 created one of the earliest MFA programs in art and tech.  I regularly collaborate with Sandin on many of the lab's current research efforts, and have always been a huge fan of his work and philosophy.  It seemed like a good choice for Processing Chicago's participation in the ReCode Project, as I host our meetings in the lab.
+			</p>
+			<p>As for the reasoning behind the choice of video, it was a matter of selecting one of Sandin and Defanti’s pieces that was iconic of their work and of the origins of this lab. This piece is unusual in that it was originally performed, so what we are actually doing is creating a framework or environment for unique performances of the piece, but trying to keep the look and feel of the original framework (e.g. artifacts of the vector displays used).
+			</p>
+			<br>
+
+			<h4>How did you approach the project as a group?</h4>
+			<br>
+			<p>There are a lot of different aspects of this piece, so we knew that the port would be complicated and would require a bunch of people working on each component individually to accomplish it.  The typical Processing Chicago meeting is ~2 hours, so my goal was to establish a dialogue about the goals of the project, and to come up with a sensible outline.  Fortunately, Dan Sandin was able to attend and <a href="http://www.youtube.com/watch?v=wdysHHZZTYA">gave a talk about the piece</a>, with an excellent portion dedicated to how it was made and what the components he thought would be important for a successful port.  
+			</p>
+			<p>I put the code that a few Processing Chicago attendees began on <a href="https://github.com/spiralP5/spiralP5">GitHub</a> after this initial meeting, and I’m hoping that folks will continue to add to what we started.  I am particularly interested in the audio needs for the piece (originally performed on a ARP 2600 analog synthesizer), so that is the area I am working on.
+			</p>
+			<br>
+
+			<h4>What did you encounter along the way?</h4>
+			<br>
+			<p>So far, it’s been really interesting to see how people have approached the port. There’s no surviving source code for the piece, so aside from Sandin’s guidance, we are basically working from the videos made of the piece being performed, and the equation for a spiral (which is the origin of the basic forms being manipulated in the piece).
+			</p>
+			<br>
+
+			<h4>How do we use it? What can we learn from it?</h4>
+			<br>
+			<p>There has been some great work done thus far by several people to get the project started, but there’s a lot left to do.  My goal was to initiate the effort, and then provide an opportunity for people to work on it wherever or whenever they want.  Many regular Processing Chicago attendees expressed interest in the project—as well as a number of other artists—so GitHub seemed like the obvious choice for an ongoing, open collaboration.  I’d love to eventually see numerous versions being carried out in a variety of ways, with interesting approaches to recreating the feel of the piece and using novel control systems for the performance.
+			</p>
+			<p>I think the most important thing we’ve learned so far is the overall need to constantly be thinking about the archival potential of any work of computational art.  For example, if we have the source code for an artwork, we could at the very least understand the basic principles of what the artist was doing, and reinterpret that to something contemporary.  However, the ideal scenario would be regular ports of an artist’s body of work…at least more frequent than 35 years.
+			</p>
+
+			<hr>
+			<br>
+			<!-- About P5 Chicago -->
+			<p><em><a href="http://www.evl.uic.edu/processing-chicago/">Processing Chicago</a> serves as a node for creative coding and electronics, hosting a monthly meeting at the <a href="http://www.evl.uic.edu/index.php">Electronic Visualization Laboratory</a> (EVL) at the University of Illinois at Chicago. The meetings consist of workshops and presentations given by artists, designers and scientists exploring creative research using a variety of media and toolsets, including (but not limited to) Processing, Arduino, openFrameworks, Cinder, Max/MSP and Supercollider. Processing Chicago was founded by <a href="http://danielsauter.com/">Daniel Sauter</a> and <a href="http://jdpirtle.com/">JD Pirtle</a>.
+			</em></p>
+			<br>
+			<br>
+			<hr>
+	</div>
+
+{% endblock %}

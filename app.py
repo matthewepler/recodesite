@@ -388,6 +388,11 @@ def survey():
 
 	return render_template("survey.html")
 
+@app.route("/featured")
+def featured():
+
+	return render_template("featured.html")
+
 
 # ---------------------------------------------------------------- TEST >>>
 @app.route("/testtesttest")
