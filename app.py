@@ -87,7 +87,7 @@ def submit( artwork_slug ):
 			now = now.strftime('%Y%m%d%H%M%s')
 			now = now.encode('ASCII')
 			filename = translation.artist + now + ".pde"
-			filename = filename.replace(" ", "").encode('ASCII')
+			filename = filename.replace(" ", "").encode('UTF')
 			s3conn = boto.connect_s3(os.environ.get('AWS_ACCESS_KEY_ID'),os.environ.get('AWS_SECRET_ACCESS_KEY'))
 			b = s3conn.get_bucket(os.environ.get('AWS_BUCKET')) # bucket name defined in .env
 			k = b.new_key(b)
