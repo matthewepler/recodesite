@@ -45,20 +45,14 @@ def submit( artwork_slug ):
 		
 		translation = models.Translation()
 		translation.timestamp = datetime.datetime.now()
-		translation.title = request.form.get('title') 				# required
-		if translation.title == "":
-			return "Please give your translation a title."
-		translation.artist = request.form.get('artist')				# required
-		if translation.artist == "":
-			return "Please include your name."
-		translation.artist_email = request.form.get('artist-email')	# required
-		if translation.artist_email == "":
-			return "Please include your email."
-		translation.category = request.form.get('category')			# required, will default to 'direct'
-		translation.artist_url = request.form.get('artist-url')
+		translation.title = request.form.get('title', 'untitled') 				# required
+		translation.artist = request.form.get('artist', 'anonymous')				# required
+		translation.artist_email = request.form.get('artist-email', 'none')	# required
+		translation.category = request.form.get('category', 'direct')			# required, will default to 'direct'
+		translation.artist_url = request.form.get('artist-url', "none")
 		translation.description = request.form.get('description', 'None')
-		descriptionList = translation.description.split("\r\n")
-		translation.video = Markup( request.form.get('video') )
+		descriptionList = translation.description.split("\r\n", 'no description provided')
+		translation.video = Markup( request.form.get('video', 'none') )
 
 		# IMAGE FILE
 		photo_upload = request.files['photo-upload']
