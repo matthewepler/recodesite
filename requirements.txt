@@ -1,7 +1,7 @@
 
 Flask==0.10
 Mongoengine
-unidecode=0.04.18
+unidecode==0.04.18
 Flask-mongoengine
 requests==0.14.1
 boto
