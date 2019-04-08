@@ -17,8 +17,8 @@ pyxdg==0.25
 scour==0.37
 SecretStorage==2.3.1
 six==1.11.0
-trash-cli
+trash-cli==0.12.9.14
 webencodings==0.5
-Flask==0.10
+Flask
 unidecode
 flask-mongoengine
