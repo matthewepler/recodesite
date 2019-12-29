@@ -1,46 +1,39 @@
 # -*- coding: utf-8 -*-
-from flask.ext.mongoengine.wtf import model_form
-from wtforms.fields import * # for our custom signup form
-from flask.ext.mongoengine.wtf.orm import validators
-from flask.ext.mongoengine import *
 from datetime import datetime
+from flask_mongoengine import MongoEngine
 
 
-class Translation( mongoengine.Document ):
-	title = mongoengine.StringField(required=True)
-	artist = mongoengine.StringField(required=True)
-	artist_url = mongoengine.StringField()
-	artist_email = mongoengine.StringField(required=True)
-	category = mongoengine.StringField(required=True)
-	slug = mongoengine.StringField()
-	artwork_slug = mongoengine.StringField()
-	photo_link = mongoengine.StringField(required=True)
-	pde_link = mongoengine.StringField()  # depreciated 01/10/13, brought back 01/16/13
-	js = mongoengine.BooleanField()
-	description = mongoengine.StringField()
-	timestamp = mongoengine.DateTimeField(default=datetime.now())
-	video = mongoengine.StringField()	  # depreciated 12/21/12
-	code = mongoengine.StringField(required=True)
-
-class Artwork( mongoengine.Document ):
-	title = mongoengine.StringField()
-	artist = mongoengine.StringField()
-	source = mongoengine.StringField()
-	source_detail = mongoengine.StringField()
-	source_link = mongoengine.StringField()
-	date = mongoengine.StringField()
-	photo_link = mongoengine.StringField()
-	code_link = mongoengine.StringField()
-	slug = mongoengine.StringField()
-	description = mongoengine.StringField()
-	hasTranslation = mongoengine.StringField()
+db = MongoEngine()
 
 
+class Translation(db.Document):
+    meta = {'strict': False}
+    title = db.StringField(required=True)
+    artist = db.StringField(required=True)
+    artist_url = db.StringField()
+    artist_email = db.StringField(required=True)
+    category = db.StringField(required=True)
+    slug = db.StringField()
+    artwork_slug = db.StringField()
+    photo_link = db.StringField(required=True)
+    pde_link = db.StringField()  # depreciated 01/10/13, brought back 01/16/13
+    js = db.BooleanField()
+    description = db.StringField()
+    timestamp = db.DateTimeField(default=datetime.now())
+    video = db.StringField()  # depreciated 12/21/12
+    code = db.StringField(required=True)
 
-# ------ FORMS ----------
-ArtworkForm = model_form( Artwork )
-TranslationForm = model_form( Translation )
 
-class upload_form( TranslationForm ):
-	photo_upload = FileField('jpg, png, or gif', validators=[])
-	file_upload = FileField('place all code in a single .pde file')
+class Artwork(db.Document):
+    meta = {'strict': False}
+    title = db.StringField()
+    artist = db.StringField()
+    source = db.StringField()
+    source_detail = db.StringField()
+    source_link = db.StringField()
+    date = db.StringField()
+    photo_link = db.StringField()
+    code_link = db.StringField()
+    slug = db.StringField()
+    description = db.StringField()
+    hasTranslation = db.StringField()
