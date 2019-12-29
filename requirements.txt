@@ -1,9 +1,0 @@
-Flask==0.10
-Mongoengine
-unidecode
-Flask-mongoengine
-requests==0.14.1
-boto
-Flask-Bcrypt==0.5.2
-Flask-Login==0.1.2
-pymongo==2.9
