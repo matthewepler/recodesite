@@ -1,0 +1,21 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[dev-packages]
+
+[packages]
+mongoengine = "*"
+flask-mongoengine = "*"
+requests = "==0.14.1"
+boto = "*"
+pymongo = "==3.10.0"
+Flask = "==0.10"
+Unidecode = "==0.04.18"
+Flask-Bcrypt = "==0.5.2"
+Flask-Login = "==0.1.2"
+boto3 = "*"
+
+[requires]
+python_version = "3.7"
