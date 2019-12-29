@@ -7,6 +7,7 @@ from datetime import datetime
 
 
 class Translation( mongoengine.Document ):
+        meta = {'strict': False}
 	title = mongoengine.StringField(required=True)
 	artist = mongoengine.StringField(required=True)
 	artist_url = mongoengine.StringField()
@@ -23,6 +24,7 @@ class Translation( mongoengine.Document ):
 	code = mongoengine.StringField(required=True)
 
 class Artwork( mongoengine.Document ):
+        meta = {'strict': False}
 	title = mongoengine.StringField()
 	artist = mongoengine.StringField()
 	source = mongoengine.StringField()
