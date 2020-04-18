@@ -71,14 +71,12 @@ def submit(artwork_slug):
             filename = "p" + \
                 now.strftime('%Y%m%d%H%M%s') + \
                 secure_filename(photo_upload.filename)
-            app.logger.info(os.environ.get(
-                'AWS_ACCESS_KEY_ID'), os.environ.get('AWS_SECRET_ACCESS_KEY'))
             s3conn = boto.connect_s3(os.environ.get(
                 'AWS_ACCESS_KEY_ID'), os.environ.get('AWS_SECRET_ACCESS_KEY'))
             # bucket name defined in .env
             b = s3conn.get_bucket(os.environ.get('AWS_BUCKET'))
-            k = b.new_key(b)
-            k.key = filename
+            k = b.new_key(filename)
+            # k.key = filename
             k.set_metadata("Content-Type", photo_upload.mimetype)
             k.set_contents_from_string(photo_upload.stream.read())
             k.make_public()
@@ -210,7 +208,6 @@ def alltranslations():
 def translationslist():
 
     filter_str = request.form.get('filter')
-    app.logger.debug(filter_str)
 
     artworks = []
     translations = []
@@ -264,7 +261,7 @@ def search():
     allTranslations = models.Translation.objects()
 
     search_str = request.form.get('keyword')
-    app.logger.debug(search_str)
+
     search_words = search_str.split()
     for word in search_words:
         word.replace(",", "")
@@ -352,7 +349,6 @@ def data():
 
     all_artworks = models.Artwork.objects()
     for a in all_artworks:
-        app.logger.debug(a.title)
         artwork = {
             'title': a.title,
             'artist': a.artist,
