@@ -1,6 +1,6 @@
 autopep8==1.5.1
 boto==2.49.0
-Flask==0.10
+Flask==1.0
 Flask-Bcrypt==0.5.2
 Flask-Login==0.1.2
 flask-mongoengine==0.9.5
