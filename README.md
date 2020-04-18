@@ -7,3 +7,14 @@
 * `heroku local web`
 
 To get hot reloading on the server so you can see your changes without restarting the server, go the bottom of app.py and turn debugging on. 
+
+
+LOGS
+---
+04/2020 - User reported being unable to submit translation
+Cause: outdated code
+Fixes: 
+* updated python runtime version
+* updated failing function calls
+* updated boto s3 connection function names
+* created new AWS access key and updated Heroku config vars
