@@ -10,6 +10,7 @@ from flask.ext.mongoengine import mongoengine
 
 import models
 import boto
+from boto.s3.connection import S3Connection
 
 mongoengine.connect('mydata', host=os.environ.get('MONGOLAB_URI'), retryWrites=False)
 
@@ -71,7 +72,7 @@ def submit(artwork_slug):
             filename = "p" + \
                 now.strftime('%Y%m%d%H%M%s') + \
                 secure_filename(photo_upload.filename)
-            s3conn = boto.connect_s3(os.environ.get(
+            s3conn = S3Connection(os.environ.get(
                 'AWS_ACCESS_KEY_ID'), os.environ.get('AWS_SECRET_ACCESS_KEY'))
             # bucket name defined in .env
             b = s3conn.get_bucket(os.environ.get('AWS_BUCKET'))
