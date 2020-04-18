@@ -87,7 +87,7 @@ def submit(artwork_slug):
                 translation.photo_link = "https://s3.amazonaws.com/recode-files/" + filename
 
         else:
-            return "Uhoh! There was an error uploading " + photo_upload.filename
+            return "Uhoh! There was an error uploading. Please make sure you have included an image." + photo_upload.filename
 
         # CODE STRING (required)
         translation.code = "/* \nPart of the ReCode Project (http://recodeproject.com)\n" + "Based on \"" + orig.title + "\" by " + orig.artist + "\n" + "Originally published in \"" + orig.source + "\" " + orig.source_detail + ", " + \
