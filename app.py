@@ -1,6 +1,7 @@
 import os
 import datetime
 import re
+import urllib
 from unidecode import unidecode
 from werkzeug.utils import secure_filename
 
@@ -10,7 +11,7 @@ from flask.ext.mongoengine import mongoengine
 import models
 import boto
 
-mongoengine.connect('mydata', host=os.environ.get('MONGOLAB_URI'))
+mongoengine.connect('mydata', host=os.environ.get('MONGOLAB_URI'), retryWrites=False)
 
 app = Flask(__name__)
 app.config['CSRF_ENABLED'] = False
@@ -54,9 +55,13 @@ def submit(artwork_slug):
         # required, will default to 'direct'
         translation.category = request.form.get('category', 'direct')
         translation.artist_url = request.form.get('artist-url', "none")
-        translation.description = request.form.get('description', 'None')
-        descriptionList = translation.description.split(
-            "\r\n", 'no description provided')
+
+        descriptionList = []
+        translation.description = request.form.get('description', None)
+        if translation.description:
+            descriptionList = translation.description.split("\r\n")
+        else:
+            translation.description = 'No description provided'
         translation.video = Markup(request.form.get('video', 'none'))
 
         # IMAGE FILE
@@ -66,6 +71,8 @@ def submit(artwork_slug):
             filename = "p" + \
                 now.strftime('%Y%m%d%H%M%s') + \
                 secure_filename(photo_upload.filename)
+            app.logger.info(os.environ.get(
+                'AWS_ACCESS_KEY_ID'), os.environ.get('AWS_SECRET_ACCESS_KEY'))
             s3conn = boto.connect_s3(os.environ.get(
                 'AWS_ACCESS_KEY_ID'), os.environ.get('AWS_SECRET_ACCESS_KEY'))
             # bucket name defined in .env
@@ -91,9 +98,9 @@ def submit(artwork_slug):
         if translation.code:
             now = datetime.datetime.now()
             now = now.strftime('%Y%m%d%H%M%s')
-            now = now.encode('ASCII')
+            # now = now.encode('ASCII')
             filename = translation.artist + now + ".pde"
-            filename = filename.replace(" ", "").encode('UTF')
+            filename = filename.replace(" ", "")
             s3conn = boto.connect_s3(os.environ.get(
                 'AWS_ACCESS_KEY_ID'), os.environ.get('AWS_SECRET_ACCESS_KEY'))
             # bucket name defined in .env
@@ -104,7 +111,7 @@ def submit(artwork_slug):
             k.set_contents_from_string(translation.code)
             k.make_public()
             root = "https://s3.amazonaws.com/recode-files/"
-            translation.pde_link = root.encode('ASCII') + filename
+            translation.pde_link = str(root + filename)
 
         # JS BOOLEAN
         browser_note = "This sketch does not run in the browser."
@@ -442,12 +449,12 @@ def slugify(text, delim=u'-'):
     result = []
     for word in _punct_re.split(text.lower()):
         result.extend(unidecode(word).split())
-    return unicode(delim.join(result))
+    return str(delim.join(result))
 
 
 # --------------------------------------------------------- SERVER START-UP >>>
 if __name__ == "__main__":
-    app.debug = False
+    app.debug = True
 
     # locally PORT 5000, Heroku will assign its own port
     port = int(os.environ.get('PORT', 5000))
