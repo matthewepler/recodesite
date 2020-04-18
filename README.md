@@ -5,3 +5,5 @@
 * create a virtual environment and activate it
 * `pip install -r requirements.txt`
 * `heroku local web`
+
+To get hot reloading on the server so you can see your changes without restarting the server, go the bottom of app.py and turn debugging on. 
