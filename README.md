@@ -9,6 +9,9 @@
 To get hot reloading on the server so you can see your changes without restarting the server, go the bottom of app.py and turn debugging on. 
 
 
+## Managing Database
+It is recommended to use MongoDB Compass (local app) to connect to the database to edit/delete records. You will need the connection URI with user:pswd to connect. See env vars.
+
 ### Change log
 ---
 04/2020 - User reported being unable to submit translation
