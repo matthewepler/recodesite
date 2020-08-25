@@ -9,7 +9,7 @@
 To get hot reloading on the server so you can see your changes without restarting the server, go the bottom of app.py and turn debugging on. 
 
 
-LOGS
+### Change log
 ---
 04/2020 - User reported being unable to submit translation
 Cause: outdated code
@@ -18,3 +18,9 @@ Fixes:
 * updated failing function calls
 * updated boto s3 connection function names
 * created new AWS access key and updated Heroku config vars
+
+08/2020 - Migration to MongoDB Atlas
+mLab is being shut down so had to migrate
+* changed value of MONGOLAB_URI env var in heroku settings
+* added `dnspython` to requirements
+* changed password in Atlas settings for default user (removed `@`)
