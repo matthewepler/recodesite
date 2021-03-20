@@ -6,7 +6,7 @@ Flask-Login==0.1.2
 flask-mongoengine==0.9.5
 Flask-WTF==0.14.3
 itsdangerous==1.1.0
-Jinja2==2.11.2
+Jinja2==2.11.3
 MarkupSafe==1.1.1
 mongoengine==0.19.1
 py-bcrypt==0.4
